@@ -49,7 +49,7 @@ function colors2() {
 function clouds1() {
 noStroke();
 fill("grey");
-rect(30, 20, 550, 50, 200);
+rect(30, 20, 550, 500, 200);
 
 }
 
