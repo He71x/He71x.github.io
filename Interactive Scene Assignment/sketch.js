@@ -10,7 +10,6 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
 
 }
-
 //Create functions for objects and background
 function grass(){
   noStroke();
@@ -18,6 +17,12 @@ function grass(){
   rect(0, 700, 950, 400); 
 }
 
+function sun(){
+  noStroke();
+  fill("Yellow");
+  circle(50, 50, 250);
+
+}
 
 
 function colors1() {
@@ -44,12 +49,14 @@ function colors2() {
 function clouds1() {
 noStroke();
 fill("grey");
-rect(30, 20, 550, 50, 200);
+rect(30, 20, 550, 500, 200);
 
 }
 
 
-  function draw() {
+
+
+function draw() {
   background(10, 196, 224);
   grass();
   colors1();
@@ -57,9 +64,8 @@ rect(30, 20, 550, 50, 200);
   colors3();
   sun();
   clouds1();
-
-  }
-
+  
+}
 
 
 
