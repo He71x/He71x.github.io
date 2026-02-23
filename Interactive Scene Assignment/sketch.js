@@ -50,20 +50,28 @@ function colors3() {
 
    }
  function word() {
-  fill("black")
+  fill("green")
 text('Amaan', 900, 10 )
 
 }
 
+
+//Used to move character(shapes) with mouse movement
 function character() {
   fill("red")
 square(mouseX, mouseY, 90, 260, 70, 20, 110);
 fill("yellow")
-noStroke()
 circle(mouseX + 20, mouseY + 20, 25)
 circle(mouseX + 45, mouseY + 20, 25)
+
 }
 
+
+function object() {
+  fill("brown")
+  square(30, 20, 55);
+
+}
 
  
  function draw() { 
@@ -76,6 +84,7 @@ circle(mouseX + 45, mouseY + 20, 25)
     clouds(); 
     word();
     character();
+    object();
   }
 
   
