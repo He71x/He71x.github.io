@@ -50,7 +50,7 @@ function colors3() {
 
    }
  function word() {
-  fill("green")
+  fill("lightgreen")
 text('Amaan', 900, 10 )
 
 }
@@ -69,7 +69,7 @@ circle(mouseX + 45, mouseY + 20, 25)
 
 function object() {
   fill("brown")
-  square(30, 20, 55);
+  square(150, 645, 55);
 
 }
 
