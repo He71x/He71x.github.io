@@ -62,7 +62,7 @@ function character() {
 square(mouseX, mouseY, 90, 260, 70, 20, 110);
 fill("yellow")
 circle(mouseX + 20, mouseY + 20, 25)
-circle(mouseX + 40, mouseY + 20, 25)
+circle(mouseX + 90, mouseY + 20, 25)
 
 }
 
