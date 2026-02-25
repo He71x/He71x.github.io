@@ -59,9 +59,9 @@ text('Amaan', 900, 10 )
 //Used to move character(shapes) with mouse movement
 function character() {
   fill("red")
-square(mouseX, mouseY, 90, 260, 70, 20, 110);
+square(mouseX, mouseY, 90, 20, 70, 20, 110);
 fill("yellow")
-circle(mouseX + 20, mouseY + 20, 25)
+circle(mouseX + 20, mouseY + 29, 25)
 circle(mouseX + 45, mouseY + 20, 25)
 
 }
@@ -69,7 +69,8 @@ circle(mouseX + 45, mouseY + 20, 25)
 
 function object() {
   fill("brown")
-  square(150, 645, 55);
+  rect(15, 700, 55, -230);
+  rect(880, 700, 55, -230)
 
 }
 
@@ -83,8 +84,9 @@ function object() {
      sun();
     clouds(); 
     word();
-    character();
     object();
+    character();
+    
   }
 
   
