@@ -61,8 +61,13 @@ function character() {
   fill("red")
 square(mouseX, mouseY, 90, 20, 70, 20, 110);
 fill("yellow")
+
 circle(mouseX + 20, mouseY + 29, 25)
 circle(mouseX + 45, mouseY + 20, 25)
+
+circle(mouseX + 20, mouseY + 20, 25)
+circle(mouseX + 90, mouseY + 20, 25)
+
 
 }
 
