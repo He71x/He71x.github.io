@@ -2,8 +2,7 @@
 // Amaan Rehman
 // 2/11/26
 //
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+// Grass place.
 
  function setup() { 
   createCanvas(windowWidth, windowHeight); }
@@ -18,19 +17,24 @@
 
   let sunColor = "yellow";
 
- 
-
-
   let value = 0;
 
+let sunx = 50;
+let suny = 50;
+
+let originalx = 50;
+let originaly = 50;
+//Variable for changing background state with a middle mouse click.
+let currentBack = 0;
+
  //Create functions for objects and background function 
- 
+ //able to change grass visibility
  function grass(){ 
- noStroke();
+  strokeWeight(6)
   if(value === 0){
-    fill("green");
+    fill("blue");
   } else{
-      fill("brown");
+      fill("green");
 
 
   rect(0, 700, 950, 400);
@@ -42,48 +46,26 @@ if(value === 0){
 value = 255;
 }else {
   value = 0
-
-
 }
 
-
 }
-
-
- 
- function colors1() { 
-  noStroke();
-   fill("navy"); 
-   rect(0, 0, 950, 120);
-   } 
- 
- 
- function colors2() { 
-  noStroke(); 
-  fill("blue"); 
-  rect(0, 100, 950, 120);
-
- }
-
-function colors3() {
- noStroke();
-  fill("lightblue");
-  rect(0, 200, 950, 120); 
-} 
  
  
  function clouds() {
    noStroke(); 
    fill("grey"); 
    rect(30, 20, 550, 50, 200);
+   rect(530, 150, 550, 50, 20)
    } 
-
+//Able to move sun with key 'f' and 'm'
    function sun() {
       noStroke();
       fill(sunColor)
-      circle(50, 50, 250)
-
+      circle(sunx, suny, 250) 
    }
+
+
+
  function word() {
   fill("lightgreen")
 text('Amaan', 900, 10 )
@@ -103,16 +85,24 @@ circle(mouseX + 45, mouseY + 20, 25)
 
 }
 
-
+//Function for trees
 function object() {
   fill("brown")
   rect(15, 700, 55, -230);
-  rect(880, 700, 55, -230)
+  rect(880, 700, 55, -230);
 
-  
+  fill("green")
+   square(30, 440, 55, 10);
+   square(3, 440, 55, 10);
+   square(30, 470, 70, 10);
+
+  square(830, 480, 55, 10);
+   square(850, 440, 55, 10);
+  square(877, 440, 55, 10);
+
 
 }
-//Swtitch between pressing s and another key, for example like s and d repeatedly.
+//s to switch between colors
 function keyPressed() {
 if(key === 's'){
     if(changedColor === false) {
@@ -124,36 +114,61 @@ if(key === 's'){
     else{
       sunColor = "yellow"
       changedColor = false
-
     }
+    }//Now to move position of the sun with key 'f'
+    if(key === 'f') {
+      sunx = random(300, 400, 500);
+      suny = random(100, 200, 300);
     }
-
-
-
-
-
-
-
+else if(key === 'm'){
+sunx = originalx;
+suny = originaly;
 
 
 }
 
 
+}
+//Use middle mouse button to change background color.
+function mousePressed() {
+  if(mouseButton === CENTER) {
+    currentBack = (currentBack + 1) % 4;
 
 
- 
+  }
+}
+
+function colorBackground() {
+  if(currentBack === 0){
+      background(10, 196, 224);   //original blue
+  }
+else if(currentBack === 1){
+  background(0, 255, 0);    //green
+}
+else if(currentBack === 2) {
+  background(128, 0, 128);  //purple
+}
+else if(currentBack === 3){
+  background(255, 255, 0);  //Yellow
+}
+
+
+}
+
+
  function draw() { 
   background(r, g, b);
+  colorBackground();
    grass(); 
-   colors1();
-    colors2(); 
-    colors3();
+
      sun();
     clouds(); 
+
+
     word();
     object();
     character();
-    keyPressed();
+    
   }
 
   
