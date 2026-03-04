@@ -24,12 +24,12 @@ circle(cX, 50, 25);
 // USE FUNCTION TO DRAW A LINE OF CIRCLES
 // y --> number  height at which to draw the line
 // size --> number  diameter of the circles
-  //let xStart = width * 0.1; //10 percent position from left
- // let xEnd = width * 0.9;    //00 percent position from left
+  let xStart = width * 0.1; //10 percent position from left
+  let xEnd = width * 0.9;    //00 percent position from left
 
-  //for(let x = xStart; x < xEnd; x += size)
+  for(let x = xStart; x < xEnd; x += size)
 
-    //circle(x, y , size)
+    circle(x, y , size)
 
 
 function gradientBackground(){
