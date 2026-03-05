@@ -4,42 +4,46 @@
 
 //Make terrains
 
+let inc = 0.01;
+let start = 0.09;
+
 
 let rectWidth = 15;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  fill(100);
+  fill(10);
 }
 
-function generateTerrain() {
+//function generateTerrain() {
   //USE A LOOP TO PUT A NUMBER
   //Side of side rectangles
   //random height
-  for(let x = 0; x < width; x+= rectWidth){
-    //random height
-    let rectHeight = random(0, height * 0.73);
+  // for(let x = 0; x < width; x+= rectWidth){
+  //   //random height
+  //   let rectHeight = random(0, height * 0.73);
+  //   y = noise(0) * height;
+  //   rect(x, height, rectWidth, -rectHeight);
+  // }
 
-    rect(x, height, rectWidth, -rectHeight);
-  }
-
-}
 
 function draw() {
-  //background(220);
-  //generateTerrain();
-  //frameRate(10);
+  background(220);
+  stroke(255);
+  noFill();
+ 
 
-  let noiseLevel = 1000;
-  let noiseScale = 0.02;
+  beginShape();
+  for(var x = 0; x < width; x++){
+    
+    stroke(255);
+    point(x, 200);
 
-
-  let x = frameCount;
-  let nx = noiseScale * x;
-
-  let y = noiseLevel * noise(nx);
-
-  line(x, y, x ,height);
 
   
+
+
+
+
+  }
 }
