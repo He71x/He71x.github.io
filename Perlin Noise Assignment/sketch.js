@@ -7,8 +7,6 @@
 
 let rectWidth = 15;
 
-
-
 function setup() {
   createCanvas(windowWidth, windowHeight);
   fill(100);
@@ -25,12 +23,7 @@ function generateTerrain() {
     rect(x, height, rectWidth, -rectHeight);
   }
 
-
-
 }
-
-
-
 
 function draw() {
   //background(220);
