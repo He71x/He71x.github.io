@@ -4,40 +4,34 @@
 
 //Make terrains
 
-let inc = 0.01;
-let start = 0.09;
 
+let noiseTime = 5;
+let noiseSpeed = 0.02;
 
 let rectWidth = 15;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  fill(10);
+  let x = 
 }
 
-//function generateTerrain() {
+function generateTerrain() {
   //USE A LOOP TO PUT A NUMBER
   //Side of side rectangles
   //random height
-  // for(let x = 0; x < width; x+= rectWidth){
+   for(let x = 0; x < width; x+= rectWidth){
   //   //random height
-  //   let rectHeight = random(0, height * 0.73);
-  //   y = noise(0) * height;
-  //   rect(x, height, rectWidth, -rectHeight);
-  // }
-
+     let rectHeight = random(0, height * 0.73);
+     y = noise(0) * height;
+     rect(x, height, rectWidth, -rectHeight);
+   }
+  }
 
 function draw() {
   background(220);
-  stroke(255);
-  noFill();
- 
+  generateTerrain();
+  
 
-  beginShape();
-  for(var x = 0; x < width; x++){
-    
-    stroke(255);
-    point(x, 200);
 
 
   
@@ -46,4 +40,4 @@ function draw() {
 
 
   }
-}
+
