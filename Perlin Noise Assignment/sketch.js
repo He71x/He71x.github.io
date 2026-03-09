@@ -5,39 +5,50 @@
 //Make terrains
 
 
-let noiseTime = 5;
-let noiseSpeed = 0.02;
-
-let rectWidth = 15;
+let rectWidth = 5;
+let time = 0;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  let x = 
+  fill(0)
 }
 
 function generateTerrain() {
   //USE A LOOP TO PUT A NUMBER
   //Side of side rectangles
   //random height
+  let n = time;
+
    for(let x = 0; x < width; x+= rectWidth){
   //   //random height
-     let rectHeight = random(0, height * 0.73);
+     let rectHeight = noise(n) * height * 0.75;
      y = noise(0) * height;
      rect(x, height, rectWidth, -rectHeight);
+
+     n += 0.01;
+     time += 0.0002;
    }
   }
 
 function draw() {
   background(220);
   generateTerrain();
-  
-
-
-
-  
-
-
-
-
   }
+
+
+  function keyPressed(){
+if(keyCode === LEFT_ARROW){
+rectWidth -= 1;
+}
+if(keyCode === RIGHT_ARROW){
+rectWidth += 1;
+}
+if(rectWidth < 1){
+rectWidth = 1;
+}
+if(rectWidth > 100){
+rectWidth = 100;
+
+}
+}
 
