@@ -29,9 +29,9 @@ stroke(255);
 
 strokeWeight(4);
 //dashed line
-for(let x = 0; x < width; x += 45){
+for(let x = 0; x < width; x += 50){
   line(x, width/2, x + 21, width/2)
-  noStroke();
+  
 }
 }
 
@@ -124,7 +124,9 @@ function draw() {
   for(let i of westbound){
     i.action();
   }
+  
 }
+ 
 
 
 
