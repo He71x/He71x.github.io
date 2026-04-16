@@ -46,8 +46,8 @@ function mousePressed(){
 
   // IF THEY EXIST
   //FLIP THE CARDINAL(NSEW) neighbours
-  if(x-1 >= 0) flip(x-1, y);
-  if(y-1 >= 0) flip(x, y-1);
+  if(x-1 >= 0) flip(x-1, y);  //LEFT
+  if(y-1 >= 0) flip(x, y-1);  //UP
 }
 
 }
