@@ -12,7 +12,7 @@ let grid = [
 ];
 let rows = grid.length;
 let cols = grid[0].length;
-let tileSize = 60;
+let tileSize = 80;
 
 function setup() {
   createCanvas(cols * tileSize, rows * tileSize);
@@ -23,7 +23,7 @@ function draw() {
   background(200);
 renderGrid();
 textSize(20);
-fill(255, 255, 0)
+fill(25, 255, 0)
 text(getCurrentX() + "," + getCurrentY(), mouseX, mouseY);
 }
 
@@ -32,22 +32,29 @@ function flip(x,y){
   else grid[y][x] = 0;
 }
 function mousePressed(){
-  //ONLY DO FLIP IF MOUSE IN CANVAS
-  if(mouseX < width && mouseY < height){
+  //shift click change
+  if(keyIsDown(SHIFT)){
+    for(let y = 0; y < rows; y++){ //y:0 1 2 3 4
+      for(let x = 0; x < cols; x++){ //x: 0 1 2 3 4 5
+        let fillColor = grid[y][x];
+        fill(fillColor);
+        square(x*tileSize, y*tileSize, tileSize);
+
+      }
+if (mouseX < width && mouseY < height){
 
     let x = getCurrentX();
     let y = getCurrentY();
     //ALWAYS:
-
   flip(x, y);
 
   // IF THEY EXIST
   //FLIP THE CARDINAL(NSEW) neighbours
   if(x-1 >= 0) flip(x-1, y);  //LEFT
   if(y-1 >= 0) flip(x, y-1);  //UP
-}
+}}
+  }}
 
-}
 
 function getCurrentX(){
 //DETERMINE THE CURRENT OF X
