@@ -16,6 +16,7 @@ let tileSize = 80;
 
 function setup() {
   createCanvas(cols * tileSize, rows * tileSize);
+  randomizeGrid();
 }
 
 
@@ -25,6 +26,13 @@ renderGrid();
 textSize(20);
 fill(25, 255, 0)
 text(getCurrentX() + "," + getCurrentY(), mouseX, mouseY);
+
+if(checkWin()){
+  textSize(40);
+  fill(25, 255, 0);
+  textAlign(CENTER, CENTER);
+  text("YOU WIN!", width/2, height/2);
+}
 }
 
 function flip(x,y){
@@ -33,28 +41,42 @@ function flip(x,y){
 }
 function mousePressed(){
   //shift click change
-  if(keyIsDown(SHIFT)){
-    for(let y = 0; y < rows; y++){ //y:0 1 2 3 4
-      for(let x = 0; x < cols; x++){ //x: 0 1 2 3 4 5
-        let fillColor = grid[y][x];
-        fill(fillColor);
-        square(x*tileSize, y*tileSize, tileSize);
-
-      }
+  
 if (mouseX < width && mouseY < height){
 
     let x = getCurrentX();
     let y = getCurrentY();
-    //ALWAYS:
+    
+    if(keyIsDown(SHIFT)){   
   flip(x, y);
-
+    }
+    else{
+      flip(x,y);
+    
   // IF THEY EXIST
   //FLIP THE CARDINAL(NSEW) neighbours
   if(x-1 >= 0) flip(x-1, y);  //LEFT
-  if(y-1 >= 0) flip(x, y-1);  //UP
-}}
-  }}
+    if(x+1 > cols) flip(x+1, y);
+  
+   
+    if(y-1 >= 0) flip(x, y-1);  //UP
+  if(y+1 < rows) flip(x, y + 1);
+}
+}
+}
 
+function checkWin(){
+  let first = grid[0][0];
+  for(let y = 0; y < rows; y++){
+    for(let x = 0; x < cols; x++){
+      if(grid[y][x] != first){
+        return false;
+
+      }
+    }
+  }
+  return true;
+}
 
 function getCurrentX(){
 //DETERMINE THE CURRENT OF X
@@ -70,8 +92,18 @@ function getCurrentX(){
     
       }
       
-
-
+function randomizeGrid(){
+   for(let y = 0; y < rows; y++){  
+    for(let x = 0; x < cols; x ++){ 
+      if(random(1) < 0.5){
+        grid[y][x] = 255;
+      }
+      else{
+        grid[y][x] = 0;
+      }
+}
+   }
+  }
 function renderGrid(){
   //interpret data stored in 2D array grid
   //and draw matrix of squares to reflect.
@@ -79,7 +111,7 @@ function renderGrid(){
     for(let x = 0; x < cols; x ++){  //x: 0 1 2 3 4 5
       let fillColor = grid[y][x]
       fill(fillColor);
-rect(x * tileSize, y * tileSize, tileSize);
+rect(x * tileSize, y * tileSize, tileSize * 2, tileSize);
     }
   }
 }
