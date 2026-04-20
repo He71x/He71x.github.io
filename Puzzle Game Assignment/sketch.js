@@ -12,7 +12,7 @@ let grid = [
 ];
 let rows = grid.length;
 let cols = grid[0].length;
-let tileSize = 80;
+let tileSize = 100;
 
 function setup() {
   createCanvas(cols * tileSize, rows * tileSize);
@@ -35,6 +35,7 @@ if(checkWin()){
 }
 }
 
+
 function flip(x,y){
   if(grid[y][x] === 0) grid[y][x] = 255;
   else grid[y][x] = 0;
@@ -46,7 +47,11 @@ if (mouseX < width && mouseY < height){
 
     let x = getCurrentX();
     let y = getCurrentY();
-    
+  
+
+      fill("green");
+      rect(x * tileSize, y * tileSize, tileSize);
+
     if(keyIsDown(SHIFT)){   
   flip(x, y);
     }
@@ -63,9 +68,16 @@ if (mouseX < width && mouseY < height){
   if(y+1 < rows) flip(x, y + 1);
 }
 }
+
+if(keyIsDown(32)){
+  //add space to flip between patterns
+  
+
+}
 }
 
 function checkWin(){
+  //add "you win!" after all tiles are complete
   let first = grid[0][0];
   for(let y = 0; y < rows; y++){
     for(let x = 0; x < cols; x++){
@@ -75,7 +87,7 @@ function checkWin(){
       }
     }
   }
-  return true;
+return true;
 }
 
 function getCurrentX(){
@@ -111,7 +123,8 @@ function renderGrid(){
     for(let x = 0; x < cols; x ++){  //x: 0 1 2 3 4 5
       let fillColor = grid[y][x]
       fill(fillColor);
-rect(x * tileSize, y * tileSize, tileSize * 2, tileSize);
+      
+rect(x * tileSize, y * tileSize, tileSize);
     }
   }
 }
