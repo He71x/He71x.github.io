@@ -23,6 +23,15 @@ function setup() {
 function draw() {
   background(200);
 renderGrid();
+let x = floor(mouseX/tileSize)
+let y = floor(mouseY/tileSize)
+
+if(mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0){
+  fill(255, 0, 255);
+  
+  
+
+}
 textSize(20);
 fill(25, 255, 0)
 text(getCurrentX() + "," + getCurrentY(), mouseX, mouseY);
@@ -49,8 +58,9 @@ if (mouseX < width && mouseY < height){
     let y = getCurrentY();
   
 
-      fill("green");
+      
       rect(x * tileSize, y * tileSize, tileSize);
+      
 
     if(keyIsDown(SHIFT)){   
   flip(x, y);
