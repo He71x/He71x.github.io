@@ -95,7 +95,7 @@ function drawOverlay(){
 let x = getCurrentX();
 let y = getCurrentY();
 
-fill(0, 255, 255);
+fill(0, 255, 255, 130);
 
 if(keyIsDown(SHIFT)){
   rect(x * tileSize, y * tileSize, tileSize);
@@ -113,6 +113,7 @@ if(x-1 >= 0) rect((x-1) * tileSize, y * tileSize, tileSize);
 
 }
 }
+
 function getCurrentX(){
 //DETERMINE THE CURRENT OF X
   let constrainedX = constrain(mouseX, 0, width - 1);
