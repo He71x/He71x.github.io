@@ -23,15 +23,10 @@ function setup() {
 function draw() {
   background(200);
 renderGrid();
-let x = floor(mouseX/tileSize)
-let y = floor(mouseY/tileSize)
+drawOverlay();
 
-if(mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0){
-  fill(255, 0, 255);
-  
-  
 
-}
+
 textSize(20);
 fill(25, 255, 0)
 text(getCurrentX() + "," + getCurrentY(), mouseX, mouseY);
@@ -43,7 +38,6 @@ if(checkWin()){
   text("YOU WIN!", width/2, height/2);
 }
 }
-
 
 function flip(x,y){
   if(grid[y][x] === 0) grid[y][x] = 255;
@@ -71,7 +65,7 @@ if (mouseX < width && mouseY < height){
   // IF THEY EXIST
   //FLIP THE CARDINAL(NSEW) neighbours
   if(x-1 >= 0) flip(x-1, y);  //LEFT
-    if(x+1 > cols) flip(x+1, y);
+    if(x+1 < cols) flip(x+1, y);
   
    
     if(y-1 >= 0) flip(x, y-1);  //UP
@@ -79,12 +73,9 @@ if (mouseX < width && mouseY < height){
 }
 }
 
-if(keyIsDown(32)){
-  //add space to flip between patterns
-  
 
 }
-}
+
 
 function checkWin(){
   //add "you win!" after all tiles are complete
@@ -100,6 +91,28 @@ function checkWin(){
 return true;
 }
 
+function drawOverlay(){
+let x = getCurrentX();
+let y = getCurrentY();
+
+fill(0, 255, 255);
+
+if(keyIsDown(SHIFT)){
+  rect(x * tileSize, y * tileSize, tileSize);
+}
+else{
+
+rect(x * tileSize, y * tileSize, tileSize);
+
+if(x-1 >= 0) rect((x-1) * tileSize, y * tileSize, tileSize);  
+  if(x+1 < cols) rect((x+1) * tileSize, y * tileSize, tileSize);  
+  
+   
+    if(y-1 >= 0) rect(x * tileSize, (y-1) * tileSize, tileSize);
+  if(y+1 < rows) rect(x * tileSize, (y+1) * tileSize, tileSize);
+
+}
+}
 function getCurrentX(){
 //DETERMINE THE CURRENT OF X
   let constrainedX = constrain(mouseX, 0, width - 1);
