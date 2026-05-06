@@ -32,7 +32,7 @@ function rightSide(){
     let r = pixels[index];
     let g = pixels[index+1];
     let b = pixels[index+2];
-
+//affects right side of the page
     if(x > width / 2){
       setPixel(x,y,r, 0, b);
     }
