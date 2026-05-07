@@ -1,10 +1,13 @@
-// Project Title
-// Your Name
-// Date
+// The Death Chase
+// Amaan and Ahnaaf
+// 5/6/26
 //
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
 
+let player, let 
+
+function preload(){
+
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
