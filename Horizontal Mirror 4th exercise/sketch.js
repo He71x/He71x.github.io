@@ -41,9 +41,7 @@ function horizontalMirror(){
 
 let mirror = width - x - 3;
 setPixel(mirror,y, r, g, b);
-
-
-    
+ 
 }
   }
 }
