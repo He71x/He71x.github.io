@@ -4,21 +4,25 @@
 //
 
 
+//which screen shown
 let gameState = "menu";
 
-//menu background image
-let menuBg;
-//play button image
 let playButton;
+let menuBg;
+
+let optionsButton;
+ let levelBg1;
+
+ let characterImg;
+ let zombieImg;
 
 
 function preload(){
-  //loads background image
-//menuBg = loadImage("");
+  //loads menu background image
+  //menuBg = loadImage("");
 
-//loads playbutton image
-//playButton = loadImage("");
-
+  //loads playbutton image
+  //playButton = loadImage("");
 
 }
 
@@ -27,21 +31,27 @@ function setup() {
 
 }
 
-
 function draw() {
   background(220);
-  //use logic to draw menu or show main screen
   if(gameState === "menu"){
-    drawMenu();
+    menuScreen();
   }
-else if(gameState === "game"){
-  drawGame();
-}
+  else if(gameState === "options"){
+    optionsScreen();
+  
+  }
+  else if(gameState === "level1"){
+    level1();
+
+  }
+  
+
+  
 }
 
-
-function drawMenu(){
-background(20);
+function menuScreen(){
+  background(20);
+  //images not yet added
 //image(menuBg, 0,0,width,height);
 
 fill(0,150);
@@ -53,18 +63,18 @@ textFont('Courier New');
 
 textSize(90);
 text("THE DEATH CHASE", width/2, 700);
+}
 
-textSize(30);
-text("CLICK PLAY TO START", width/2, 200);
 
-let x = width/2;
-let y = height/2
 
-let w = 250
+
+
+function optionsScreen(){
+  background(40);
+  
 
 }
 
-function drawGame(){
- 
+function level1(){
 
 }
