@@ -21,12 +21,6 @@ function preload(){
   //loads menu background image
   menuBg = loadImage("assets/Menu Background.jpeg");
 
-  //loads playbutton image
-  playButton = loadImage("assets/startButton (3).png");
-
-  //loads optionsButton image
-  //optionsButton = loadImage("");
-
   //loads level1 image
   levelBg1 = loadImage("assets/Level 1 background.png");
 
@@ -58,33 +52,26 @@ function draw() {
   }
 }
 
+
+function repaint(){
+  let g = 255;
+  background(g);
+}
 function menuScreen(){
 image(menuBg, 0,0,width,height);
 
-image(playButton,300,600,width/3,height/3.5);
 
-//positions for the "play" button
-let buttonX = width/2;
-let buttonY = height/2;
 
-let buttonSize1 = 250;
-let buttonSize2 = 100;
-
-let buttonHover = mouseX > buttonX - buttonSize1/2;
+let button =  createButton("PLAY");
+button.position(385,755);
+button.size(200, 50);
+button.mousePressed(repaint);
 
 
 
 
 
 
-
-
-
-let optionX = width/2;
-let optionY = height/2;
-
-let optionSize1 = 300;
-let optionSize2 = 200;
 
 
 fill("red");
@@ -93,8 +80,8 @@ textFont('bold');
 
 textSize(90);
 text("THE DEATH CHASE", width/2, 100);
-}
 
+}
 
 function optionsScreen(){
   background(40);
