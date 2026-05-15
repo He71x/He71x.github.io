@@ -5,14 +5,11 @@
 
 
 //which screen shown
-let gameState = "menu";
+//let gameState = "menu";
 
-let playButton;
+let firstImage = true;
 let menuBg;
-
-let optionsButton;
  let levelBg1;
-
  let characterImg;
  let zombieImg;
 
@@ -34,62 +31,39 @@ function preload(){
 
 function setup() {
   createCanvas(950, 980);
+  let button =  createButton("PLAY");
+button.position(385,755);
+button.size(200, 50);
+button.mousePressed(repaint);
+button.mousePressed(swapBg);
 
 }
 
 function draw() {
   background(220);
-  if(gameState === "menu"){
-    menuScreen();
-  }
-  else if(gameState === "options"){
-    optionsScreen();
+ if(firstImage){
+  image(menuBg, 0,0,width,height); 
+  fill("red");
+  textAlign(CENTER);
+  textFont('bold');
+  textSize(90);
+  text("THE DEATH CHASE", width/2, 100);
+
+ }
+ else{
+scale(1, 0.7);
   
-  }
-  else if(gameState === "level1"){
-    level1();
+  image(levelBg1,0, 0, width, height);
+  rect(0,1000,500, 900);
 
+ 
+ }
   }
+function swapBg(){
+  firstImage =! firstImage;
 }
-
-
 function repaint(){
   let g = 255;
   background(g);
 }
-function menuScreen(){
-image(menuBg, 0,0,width,height);
 
-
-
-let button =  createButton("PLAY");
-button.position(385,755);
-button.size(200, 50);
-button.mousePressed(repaint);
-
-
-
-
-
-
-
-
-fill("red");
-textAlign(CENTER);
-textFont('bold');
-
-textSize(90);
-text("THE DEATH CHASE", width/2, 100);
-
-}
-
-function optionsScreen(){
-  background(40);
-  
-
-}
-
-function level1(){
-  image(levelBg1,0,0,width,height);
-
-}
