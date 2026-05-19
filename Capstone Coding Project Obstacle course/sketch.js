@@ -7,7 +7,7 @@
 //which screen shown
 //let gameState = "menu";
 
-let firstImage = true;
+let firstImage = "true";
 let menuBg;
  let levelBg1;
  let characterImg;
@@ -15,11 +15,11 @@ let menuBg;
  let button;
 
  let platforms = [];
-//prototype player visibility
- let playerX = 10;
- let playerY = 700;
+//player visibility
+//  let playerX = 400;
+//  let playerY = 300;
 
- let playerSize = 50;
+//  let playerSize = 270;
 
 function preload(){
   //loads menu background image
@@ -32,7 +32,7 @@ function preload(){
   //zombieImg = loadImage("");
 
   //loads character image
-  //characterImg = loadImage("");
+  characterImg = loadImage("assets/character.png");
 
 }
 
@@ -68,25 +68,59 @@ scale(1, 0.7);
 
 
   //display the platform but not shown
-  for(let i of platforms){
-    i.display();
+  for(let p of platforms){
+  
+    p.display();
   }
 
-  fill("blue")
-  rect(playerX, playerY, playerSize);
+  characterImg.move();
+  characterImg.display();
 
-  //movement for prototype player
-  if(keyIsDown(LEFT_ARROW)){
-    playerX -= 5;
-  }
-  else{
-    if(keyIsDown(RIGHT_ARROW)){
-      playerX += 5;
+  
+  //image(characterImg, 0, 714, width/4, height/3);
+
+  //movement for player
+
+    
+  
+}
+}
+
+ //add class for the player for movement and physics
+ //when touching ground or platforms shown
+  class Player{
+    constructor(x,y){
+      //using inspiration from the vectors exercise
+      this.pos = createVector(x,y);
+      this.vel = createVector(0,0);
+      this.force = createVector(0, 0.05);
+
+      this.size = 50;
+    }
+    move(){
+    //adds the gravity
+      this.vel.add(this.force);
+      this.pos.add(this.vel);
+
+      if(keyIsDown(65)){
+        this.pos.x -= 5;
+    }
+    if(keyIsDown(68)){
+      this.pos.x += 5;
     }
   }
- 
- }
   }
+
+  for(let p of platforms){
+if(this.pos.x + this.size > p.x ||
+this.pos.x < p.x + p.w ||
+this.pos.y + this.size > p.y ||
+this.pos.y + this.size < p.y + p.h){
+
+}
+}
+
+  
 function startGame(){
   //switches screen and button hides after its in level 1
   firstImage = !firstImage;
