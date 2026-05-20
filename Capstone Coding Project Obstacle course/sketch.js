@@ -14,12 +14,11 @@ let menuBg;
  let zombieImg;
  let button;
 
- let platforms = [];
-//player visibility
-//  let playerX = 400;
-//  let playerY = 300;
+ //testing shape for collision
+ let player;
 
-//  let playerSize = 270;
+ let platforms = [];
+
 
 function preload(){
   //loads menu background image
@@ -32,7 +31,7 @@ function preload(){
   //zombieImg = loadImage("");
 
   //loads character image
-  characterImg = loadImage("assets/character.png");
+ //characterImg = loadImage("assets/character.png");
 
 }
 
@@ -44,8 +43,12 @@ button.size(200, 50);
 button.mousePressed(repaint);
 button.mousePressed(startGame);
 
+player = new Player(100,10);
+
 //places platform in its spot and used array
-platforms.push(new Platform(0,850,970,130));
+platforms.push(new Platform(0,950,970,130));
+platforms.push(new Platform(100,100,80,150));
+platforms.push(new Platform(0,950,970,130));
 
 }
 
@@ -73,16 +76,9 @@ scale(1, 0.7);
     p.display();
   }
 
-  characterImg.move();
-  characterImg.display();
+  player.move();
+  player.display();
 
-  
-  //image(characterImg, 0, 714, width/4, height/3);
-
-  //movement for player
-
-    
-  
 }
 }
 
@@ -108,16 +104,49 @@ scale(1, 0.7);
     if(keyIsDown(68)){
       this.pos.x += 5;
     }
-  }
-  }
-
+  
   for(let p of platforms){
-if(this.pos.x + this.size > p.x ||
-this.pos.x < p.x + p.w ||
-this.pos.y + this.size > p.y ||
+if(this.pos.x + this.size > p.x &&
+this.pos.x < p.x + p.w &&
+this.pos.y + this.size > p.y &&
 this.pos.y + this.size < p.y + p.h){
+}
+
+
+
+if(this.pos.x < 0 || this.pos.x > width){
+  this.vel.x *= -0.2;
+}
+if(this.pos.y > height || this.pos.y < 0 ){
+  this.vel.y *= -0.3;
+}
+  }
+}
+display(){
+  fill("blue");
+rect(this.pos.x, this.pos.y,this.size,this.size);
 
 }
+
+}
+
+//use classes for platforms
+class Platform{
+  constructor(x,y, w, h){
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+}
+display(){
+  //shows image backrgound only and platoform rect shape not shown.
+    //noFill();
+    // noStroke();
+
+  rect(this.x,this.y,this.w,this.h);
+ 
+}
+
 }
 
   
@@ -134,22 +163,5 @@ function repaint(){
   background(g);
 }
 
-//use classes for platforms
-class Platform{
-  constructor(x,y, w, h){
-    this.x = x;
-    this.y = y;
-    this.w = w;
-    this.h = h;
-}
-display(){
-  //shows image backrgound only and platoform rect shape not shown.
-  noFill();
-  noStroke();
 
-  rect(this.x,this.y,this.w,this.h);
- 
-}
-
-}
 
