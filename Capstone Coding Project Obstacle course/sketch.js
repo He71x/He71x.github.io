@@ -5,14 +5,21 @@
 
 
 //which screen shown
-//let gameState = "menu";
+let gameState = "menu";
 
-let firstImage = "true";
+let firstImage = true;
 let menuBg;
  let levelBg1;
  let characterImg;
  let zombieImg;
  let button;
+ let runImg;
+
+ let frameX = 0;
+ let frameY = 0;
+
+ let spriteW = 250;
+ let spriteH = 300;
 
  //testing shape for collision
  let player;
@@ -31,7 +38,10 @@ function preload(){
   //zombieImg = loadImage("");
 
   //loads character image
- //characterImg = loadImage("assets/character.png");
+ characterImg = loadImage("assets/character.png");
+
+ //loads running ani image
+ runImg = loadImage("assets/runAni.png");
 
 }
 
@@ -43,12 +53,11 @@ button.size(200, 50);
 button.mousePressed(repaint);
 button.mousePressed(startGame);
 
-player = new Player(100,10);
+player = new Player(0,790);
 
 //places platform in its spot and used array
 platforms.push(new Platform(0,950,970,130));
-platforms.push(new Platform(100,100,80,150));
-platforms.push(new Platform(0,950,970,130));
+
 
 }
 
@@ -90,8 +99,12 @@ scale(1, 0.7);
       this.pos = createVector(x,y);
       this.vel = createVector(0,0);
       this.force = createVector(0, 0.05);
+      this.imgW = 250;
+      this.imgH = 300;
 
-      this.size = 50;
+      this.hitboxW = 190;
+      this.hitboxH = 210;
+    
     }
     move(){
     //adds the gravity
@@ -99,35 +112,50 @@ scale(1, 0.7);
       this.pos.add(this.vel);
 
       if(keyIsDown(65)){
-        this.pos.x -= 5;
+        this.pos.x -= 8;
+//runs every 6 frames
+        if(frameCount % 6 === 0){
+          //moves on to next frame animation
+          frameX ++;
+
+          if(frameX > 4){
+              frameX = 0;
+              //loops animation back to start in a loop
+          }
+        
+        }
     }
     if(keyIsDown(68)){
-      this.pos.x += 5;
-    }
+      this.pos.x += 8;
+      if(frameCount % 6 === 0){
+          frameX ++;
+
+          if(frameX > 4){
+              frameX = 0;
+          }
+        }
+      }
   
   for(let p of platforms){
-if(this.pos.x + this.size > p.x &&
+if(this.pos.x + this.hitboxW > p.x &&
 this.pos.x < p.x + p.w &&
-this.pos.y + this.size > p.y &&
-this.pos.y + this.size < p.y + p.h){
-}
+this.pos.y + this.hitboxH > p.y &&
+this.pos.y + this.hitboxH < p.y + p.h){
 
-
-
-if(this.pos.x < 0 || this.pos.x > width){
-  this.vel.x *= -0.2;
-}
-if(this.pos.y > height || this.pos.y < 0 ){
-  this.vel.y *= -0.3;
+  this.pos.y = p.y - this.hitboxH;
+  this.vel.y = 0;
 }
   }
 }
 display(){
-  fill("blue");
-rect(this.pos.x, this.pos.y,this.size,this.size);
-
+  if(keyIsDown(65) || keyIsDown(68)){
+    //shows x and y position of the player, width and height of image and selects each animation from each frame
+    image(runImg, this.pos.x, this.pos.y, this.imgW, this.imgH, frameX * spriteW, frameY * spriteH, spriteW, spriteH);
+  }
+  else{
+    image(characterImg, this.pos.x, this.pos.y, this.imgW, this.imgH);
+  }
 }
-
 }
 
 //use classes for platforms
@@ -140,8 +168,8 @@ class Platform{
 }
 display(){
   //shows image backrgound only and platoform rect shape not shown.
-    //noFill();
-    // noStroke();
+     noFill();
+     noStroke();
 
   rect(this.x,this.y,this.w,this.h);
  
