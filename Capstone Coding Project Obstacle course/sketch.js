@@ -53,10 +53,11 @@ button.size(200, 50);
 button.mousePressed(repaint);
 button.mousePressed(startGame);
 
-player = new Player(0,790);
+player = new Player(0,30);
 
 //places platform in its spot and used array
 platforms.push(new Platform(0,950,970,130));
+platforms.push(new Platform(175,500,30,0));
 
 
 }
@@ -72,7 +73,7 @@ function draw() {
   text("THE DEATH CHASE", width/2, 100);
  }
  else{
-scale(1, 0.7);
+//scale(1, 0.7);
   
   image(levelBg1,0, 0, width, height);
   fill("darkred")
@@ -112,7 +113,7 @@ scale(1, 0.7);
       this.pos.add(this.vel);
 
       if(keyIsDown(65)){
-        this.pos.x -= 8;
+        this.pos.x -= 6;
 //runs every 6 frames
         if(frameCount % 6 === 0){
           //moves on to next frame animation
@@ -126,7 +127,7 @@ scale(1, 0.7);
         }
     }
     if(keyIsDown(68)){
-      this.pos.x += 8;
+      this.pos.x += 6;
       if(frameCount % 6 === 0){
           frameX ++;
 
@@ -168,16 +169,14 @@ class Platform{
 }
 display(){
   //shows image backrgound only and platoform rect shape not shown.
-     noFill();
-     noStroke();
+    //  noFill();
+    //  noStroke();
 
   rect(this.x,this.y,this.w,this.h);
- 
-}
 
 }
+}
 
-  
 function startGame(){
   //switches screen and button hides after its in level 1
   firstImage = !firstImage;
