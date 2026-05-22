@@ -53,11 +53,16 @@ button.size(200, 50);
 button.mousePressed(repaint);
 button.mousePressed(startGame);
 
-player = new Player(0,30);
+player = new Player(-90,100);
 
-//places platform in its spot and used array
+//places platform in its spot and used arrayd
 platforms.push(new Platform(0,950,970,130));
-platforms.push(new Platform(175,500,30,0));
+platforms.push(new Platform(175,500,10,100));
+platforms.push(new Platform(20,285,10,100));
+platforms.push(new Platform(375,335,-50,100));
+platforms.push(new Platform(510,543,160,100));
+platforms.push(new Platform(900,425,10,100));
+
 
 
 }
@@ -73,9 +78,10 @@ function draw() {
   text("THE DEATH CHASE", width/2, 100);
  }
  else{
-//scale(1, 0.7);
+scale(1, 0.7);
   
   image(levelBg1,0, 0, width, height);
+  
   fill("darkred")
   rect(0,975, 1000, 900);
 
@@ -88,10 +94,8 @@ function draw() {
 
   player.move();
   player.display();
-
 }
 }
-
  //add class for the player for movement and physics
  //when touching ground or platforms shown
   class Player{
@@ -123,7 +127,6 @@ function draw() {
               frameX = 0;
               //loops animation back to start in a loop
           }
-        
         }
     }
     if(keyIsDown(68)){
@@ -144,21 +147,37 @@ this.pos.y + this.hitboxH > p.y &&
 this.pos.y + this.hitboxH < p.y + p.h){
 
   this.pos.y = p.y - this.hitboxH;
-  this.vel.y = 0;
+  this.vel.y = 5;
 }
   }
 }
 display(){
-  if(keyIsDown(65) || keyIsDown(68)){
-    //shows x and y position of the player, width and height of image and selects each animation from each frame
-    image(runImg, this.pos.x, this.pos.y, this.imgW, this.imgH, frameX * spriteW, frameY * spriteH, spriteW, spriteH);
+  if(keyIsDown(65)){
+    //push();
+    //flips image
+    scale(-1,1);
+
+    //shows x and y position of the player, 
+    // width and height of image and selects each 
+    // animation from each frame. Minusing the positionx with
+    //image width to change directions when pressing d 
+    //to turn left
+    image(runImg, -this.pos.x - this.imgW, this.pos.y, 
+      this.imgW, this.imgH, frameX * spriteW, frameY * spriteH,
+      spriteW, spriteH);
+      //pop();
+  }
+  else if(keyIsDown(68)){
+    image(runImg, this.pos.x, this.pos.y, 
+      this.imgW, this.imgH, frameX * spriteW, frameY * spriteH,
+      spriteW, spriteH);
   }
   else{
-    image(characterImg, this.pos.x, this.pos.y, this.imgW, this.imgH);
+    image(characterImg, this.pos.x, this.pos.y, this.imgW, 
+      this.imgH);
+    }
+    }
   }
-}
-}
-
 //use classes for platforms
 class Platform{
   constructor(x,y, w, h){
@@ -169,8 +188,8 @@ class Platform{
 }
 display(){
   //shows image backrgound only and platoform rect shape not shown.
-    //  noFill();
-    //  noStroke();
+       noFill();
+      noStroke();
 
   rect(this.x,this.y,this.w,this.h);
 
