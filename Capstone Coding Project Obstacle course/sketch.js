@@ -18,14 +18,20 @@ let menuBg;
  let frameX = 0;
  let frameY = 0;
 
+ //this stops the player from exiting screen
+let barriers = [];
+
+//the spikes on the screen which restarts the player
+//to the start
+ let spikes = [];
+
+
  let spriteW = 250;
  let spriteH = 300;
 
- //testing shape for collision
  let player;
 
  let platforms = [];
-
 
 function preload(){
   //loads menu background image
@@ -34,10 +40,10 @@ function preload(){
   //loads level1 image
   levelBg1 = loadImage("assets/Level 1 background.png");
 
-  //loads zombie image
+  //loads zombie + idle image
   //zombieImg = loadImage("");
 
-  //loads character image
+  //loads character + idle image
  characterImg = loadImage("assets/character.png");
 
  //loads running ani image
@@ -62,6 +68,9 @@ platforms.push(new Platform(20,285,10,100));
 platforms.push(new Platform(375,335,-50,100));
 platforms.push(new Platform(510,543,160,100));
 platforms.push(new Platform(900,425,10,100));
+
+spikes.push(new Spike(400, 43, 56, 40));
+spikes.push(new Spike(400, 43, 56, 40));
 }
 
 function draw() {
@@ -87,6 +96,23 @@ scale(1, 0.7);
   for(let p of platforms){
   
     p.display();
+  }
+
+  for(let s of spikes){
+    if(this.pos.x + this.hitboxW > s.x &&
+      this.pos.x < s.x + s.w &&
+      this.pos.y + this.hitboxW > s.y &&
+      this.pos.y < s.y + s.h){
+    }
+    this.pos.x = 0;
+    this.pos.y = 500;
+    this.vel.y = 0;
+
+
+  }
+
+  for(let b of barriers){
+    
   }
 
   player.move();
@@ -150,7 +176,7 @@ this.pos.y + this.hitboxH < p.y + p.h){
 }
 display(){
   if(keyIsDown(65)){
-    //push();
+    push();
     //flips image
     scale(-1,1);
 
@@ -162,7 +188,7 @@ display(){
     image(runImg, -this.pos.x - this.imgW, this.pos.y, 
       this.imgW, this.imgH, frameX * spriteW, frameY * spriteH,
       spriteW, spriteH);
-      //pop();
+      pop();
   }
   else if(keyIsDown(68)){
     image(runImg, this.pos.x, this.pos.y, 
@@ -191,6 +217,22 @@ display(){
   rect(this.x,this.y,this.w,this.h);
 
 }
+}
+
+class Spike{
+  constructor(x, y, w, h){
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+  }
+  display(){
+
+    // noFill();
+    // noStroke();
+
+    triangle(this.x, this.y, this.w, this.h);
+  }
 }
 
 function startGame(){
