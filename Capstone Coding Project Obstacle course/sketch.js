@@ -62,9 +62,6 @@ platforms.push(new Platform(20,285,10,100));
 platforms.push(new Platform(375,335,-50,100));
 platforms.push(new Platform(510,543,160,100));
 platforms.push(new Platform(900,425,10,100));
-
-
-
 }
 
 function draw() {
