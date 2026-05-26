@@ -59,7 +59,7 @@ button.size(200, 50);
 button.mousePressed(repaint);
 button.mousePressed(startGame);
 
-player = new Player(-90,100);
+player = new Player(600,100);
 
 //places platform in its spot and used arrayd
 platforms.push(new Platform(0,950,970,130));
@@ -69,8 +69,8 @@ platforms.push(new Platform(375,335,-50,100));
 platforms.push(new Platform(510,543,160,100));
 platforms.push(new Platform(900,425,10,100));
 
-spikes.push(new Spike(400, 43, 56, 40));
-spikes.push(new Spike(400, 43, 56, 40));
+spikes.push(new Spike(460, 520, -45, 80));
+spikes.push(new Spike(640, 520, -45, 80));
 }
 
 function draw() {
@@ -99,21 +99,23 @@ scale(1, 0.7);
   }
 
   for(let s of spikes){
-    if(this.pos.x + this.hitboxW > s.x &&
-      this.pos.x < s.x + s.w &&
-      this.pos.y + this.hitboxW > s.y &&
-      this.pos.y < s.y + s.h){
-    }
-    this.pos.x = 0;
-    this.pos.y = 500;
-    this.vel.y = 0;
 
-
-  }
-
-  for(let b of barriers){
+    s.display();
+    if(player.pos.x + player.hitboxW > s.x &&
+      player.pos.x < s.x + s.w &&
+      player.pos.y + player.hitboxH > s.y &&
+      player.pos.y < s.y + s.h){
     
+    player.pos.x = -90;
+    player.pos.y = 100;
+    player.vel.y = 0;
+
+      }
   }
+
+  // for(let b of barriers){
+    
+  // }
 
   player.move();
   player.display();
@@ -141,7 +143,7 @@ scale(1, 0.7);
 
       if(keyIsDown(65)){
         this.pos.x -= 6;
-//runs every 6 frames
+//runs every 6 framesto slow down animation
         if(frameCount % 6 === 0){
           //moves on to next frame animation
           frameX ++;
@@ -170,7 +172,7 @@ this.pos.y + this.hitboxH > p.y &&
 this.pos.y + this.hitboxH < p.y + p.h){
 
   this.pos.y = p.y - this.hitboxH;
-  this.vel.y = 5;
+  this.vel.y = 6;
 }
   }
 }
@@ -228,11 +230,13 @@ class Spike{
   }
   display(){
 
-    // noFill();
-    // noStroke();
+      noFill();
+       noStroke();
 
-    triangle(this.x, this.y, this.w, this.h);
-  }
+    //triangle shape
+    triangle(this.x, this.y + this.h, this.x + this.w/2, 
+      this.y, this.x + this.w, this.y + this.h);
+}
 }
 
 function startGame(){
