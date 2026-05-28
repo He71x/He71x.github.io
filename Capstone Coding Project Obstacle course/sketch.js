@@ -26,7 +26,7 @@ let barriers = [];
  let spikes = [];
 
 
- let spriteW = 250;
+ let spriteW = 260;
  let spriteH = 300;
 
  let player;
@@ -59,9 +59,9 @@ button.size(200, 50);
 button.mousePressed(repaint);
 button.mousePressed(startGame);
 
-player = new Player(600,100);
+player = new Player(-60,70);
 
-//places platform in its spot and used arrayd
+//places platform in its spot and used arrays
 platforms.push(new Platform(0,950,970,130));
 platforms.push(new Platform(175,500,10,100));
 platforms.push(new Platform(20,285,10,100));
@@ -69,10 +69,13 @@ platforms.push(new Platform(375,335,-50,100));
 platforms.push(new Platform(510,543,160,100));
 platforms.push(new Platform(900,425,10,100));
 
+//places spikes and restarts player back to the start if touched
 spikes.push(new Spike(460, 520, -45, 80));
 spikes.push(new Spike(640, 520, -45, 80));
-}
 
+barriers.push(new Barrier(0, 10, 5, 300));
+
+}
 function draw() {
   background(220);
  if(firstImage){
@@ -113,9 +116,24 @@ scale(1, 0.7);
       }
   }
 
-  // for(let b of barriers){
-    
-  // }
+   for(let b of barriers){
+    b.display();
+
+    if(player.pos.x + player.hitboxW > b.x &&
+       player.pos.x < b.x + b.w &&
+       player.pos.y + player.hitboxH > b.y &&
+       player.pos.y < b.y + b.h){
+       }
+
+       //if the left side hits the barrier
+       if(player.pos.x < b.x){
+        player.pos.x = b.x - player.hitboxW;
+       }
+        else{
+          //hitting right side
+          player.pos.x = b.x + b.w;
+        }
+  }
 
   player.move();
   player.display();
@@ -178,7 +196,7 @@ this.pos.y + this.hitboxH < p.y + p.h){
 }
 display(){
   if(keyIsDown(65)){
-    push();
+    //push();
     //flips image
     scale(-1,1);
 
@@ -190,7 +208,7 @@ display(){
     image(runImg, -this.pos.x - this.imgW, this.pos.y, 
       this.imgW, this.imgH, frameX * spriteW, frameY * spriteH,
       spriteW, spriteH);
-      pop();
+      //pop();
   }
   else if(keyIsDown(68)){
     image(runImg, this.pos.x, this.pos.y, 
@@ -213,8 +231,8 @@ class Platform{
 }
 display(){
   //shows image backrgound only and platoform rect shape not shown.
-       noFill();
-      noStroke();
+         noFill();
+        noStroke();
 
   rect(this.x,this.y,this.w,this.h);
 
@@ -230,13 +248,25 @@ class Spike{
   }
   display(){
 
-      noFill();
-       noStroke();
-
+    
     //triangle shape
     triangle(this.x, this.y + this.h, this.x + this.w/2, 
       this.y, this.x + this.w, this.y + this.h);
 }
+}
+
+class Barrier{
+  constructor(x,y,w,h){
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+  }
+  display(){
+
+    fill("blue")
+    rect(this.x,this.y,this.w,this.h);
+  }
 }
 
 function startGame(){
