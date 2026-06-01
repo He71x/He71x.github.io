@@ -18,6 +18,9 @@ let menuBg;
  let frameX = 0;
  let frameY = 0;
 
+ let idleFrameX = 0;
+ let idleFrameY = 0;
+
  //this stops the player from exiting screen
 let barriers = [];
 
@@ -28,6 +31,10 @@ let barriers = [];
 
  let spriteW = 260;
  let spriteH = 300;
+
+
+ let idleSpriteW = 260;
+ let idleSpriteH = 300;
 
  let player;
 
@@ -44,7 +51,7 @@ function preload(){
   //zombieImg = loadImage("");
 
   //loads character + idle image
- characterImg = loadImage("assets/character.png");
+ characterImg = loadImage("assets/idleAnim.png");
 
  //loads running ani image
  runImg = loadImage("assets/runAni.png");
@@ -59,22 +66,26 @@ button.size(200, 50);
 button.mousePressed(repaint);
 button.mousePressed(startGame);
 
-player = new Player(0,70);
+player = new Player(-30,130);
 
 //places platform in its spot and used arrays
-platforms.push(new Platform(0,950,970,130));
-platforms.push(new Platform(175,500,10,100));
-platforms.push(new Platform(20,285,10,100));
-platforms.push(new Platform(375,335,-50,100));
-platforms.push(new Platform(510,543,160,100));
+//floor
+platforms.push(new Platform(0,990,970,130));
+//2nd plat
+platforms.push(new Platform(175,529,10,100));
+//1st plat 
+platforms.push(new Platform(20,323,10,100));
+
+platforms.push(new Platform(375,399,-50,100));
+platforms.push(new Platform(510,570,160,100));
 platforms.push(new Platform(900,425,10,100));
 
 //places spikes and restarts player back to the start if touched
-spikes.push(new Spike(460, 520, -45, 80));
-spikes.push(new Spike(640, 520, -45, 80));
+spikes.push(new Spike(460, 550, -45, 80));
+spikes.push(new Spike(690, 550, -55, 80));
 
-barriers.push(new Barrier(-120, 0, 10, height));
-barriers.push(new Barrier(900, 0, 10, height));
+barriers.push(new Barrier(-120, 0, 10, 400));
+barriers.push(new Barrier(900, 0, 10, 400));
 
 }
 function draw() {
@@ -117,7 +128,6 @@ scale(1, 0.7);
       }
   }
 
-
   player.move();
   
 
@@ -132,8 +142,6 @@ scale(1, 0.7);
 
        
       player.pos.x = b.x + b.w;
-      
-
         
   }
    }
@@ -200,7 +208,6 @@ display(){
     push();
     //flips image
     scale(-1,1);
-
     //shows x and y position of the player, 
     // width and height of image and selects each 
     // animation from each frame. Minusing the positionx with
@@ -213,12 +220,22 @@ display(){
   }
   else if(keyIsDown(68)){
     image(runImg, this.pos.x, this.pos.y, 
-      this.imgW, this.imgH, frameX * spriteW, frameY * spriteH,
+      this.imgW, this.imgH, frameX * spriteW, 
+      frameY * spriteH,
       spriteW, spriteH);
   }
   else{
-    image(characterImg, this.pos.x, this.pos.y, this.imgW, 
-      this.imgH);
+    //idle animation start similar to running sprite sheet
+    if(frameCount % 20 === 0){
+      frameX++;
+      
+      if(frameX > 3){
+        frameX = 0;
+      }
+    }
+    image(characterImg, this.pos.x, this.pos.y, this.imgH,
+      this.imgW, idleFrameX * idleSpriteW, 0, idleSpriteW, 
+      idleSpriteH);
     }
     }
   }
@@ -232,8 +249,8 @@ class Platform{
 }
 display(){
   //shows image backrgound only and platoform rect shape not shown.
-         noFill();
-        noStroke();
+          //noFill();
+          //noStroke();
 
   rect(this.x,this.y,this.w,this.h);
 
