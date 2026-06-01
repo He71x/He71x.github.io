@@ -59,7 +59,7 @@ button.size(200, 50);
 button.mousePressed(repaint);
 button.mousePressed(startGame);
 
-player = new Player(-60,70);
+player = new Player(0,70);
 
 //places platform in its spot and used arrays
 platforms.push(new Platform(0,950,970,130));
@@ -73,7 +73,8 @@ platforms.push(new Platform(900,425,10,100));
 spikes.push(new Spike(460, 520, -45, 80));
 spikes.push(new Spike(640, 520, -45, 80));
 
-barriers.push(new Barrier(0, 10, 5, 300));
+barriers.push(new Barrier(-120, 0, 10, height));
+barriers.push(new Barrier(900, 0, 10, height));
 
 }
 function draw() {
@@ -116,6 +117,10 @@ scale(1, 0.7);
       }
   }
 
+
+  player.move();
+  
+
    for(let b of barriers){
     b.display();
 
@@ -123,20 +128,16 @@ scale(1, 0.7);
        player.pos.x < b.x + b.w &&
        player.pos.y + player.hitboxH > b.y &&
        player.pos.y < b.y + b.h){
-       }
+       
 
-       //if the left side hits the barrier
-       if(player.pos.x < b.x){
-        player.pos.x = b.x - player.hitboxW;
-       }
-        else{
-          //hitting right side
-          player.pos.x = b.x + b.w;
-        }
+       
+      player.pos.x = b.x + b.w;
+      
+
+        
   }
-
-  player.move();
-  player.display();
+   }
+   player.display();
 }
 }
  //add class for the player for movement and physics
@@ -196,7 +197,7 @@ this.pos.y + this.hitboxH < p.y + p.h){
 }
 display(){
   if(keyIsDown(65)){
-    //push();
+    push();
     //flips image
     scale(-1,1);
 
@@ -208,7 +209,7 @@ display(){
     image(runImg, -this.pos.x - this.imgW, this.pos.y, 
       this.imgW, this.imgH, frameX * spriteW, frameY * spriteH,
       spriteW, spriteH);
-      //pop();
+      pop();
   }
   else if(keyIsDown(68)){
     image(runImg, this.pos.x, this.pos.y, 
