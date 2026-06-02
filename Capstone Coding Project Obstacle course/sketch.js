@@ -9,17 +9,17 @@ let gameState = "menu";
 
 let firstImage = true;
 let menuBg;
- let levelBg1;
- let characterImg;
- let zombieImg;
- let button;
- let runImg;
+let levelBg1;
+let characterImg;
+let zombieImg;
+let button;
+let runImg;
 
- let frameX = 0;
- let frameY = 0;
+let frameX = 0;
+let frameY = 0;
 
- let idleFrameX = 0;
- let idleFrameY = 0;
+let idleFrameX = 0;
+let idleFrameY = 0;
 
  //this stops the player from exiting screen
 let barriers = [];
@@ -41,19 +41,19 @@ let barriers = [];
  let platforms = [];
 
 function preload(){
-  //loads menu background image
+  //this loads menu background image
   menuBg = loadImage("assets/Menu Background.jpeg");
 
-  //loads level1 image
+  //this loads level1 image
   levelBg1 = loadImage("assets/Level 1 background.png");
 
-  //loads zombie + idle image
+  //this loads zombie + idle image
   //zombieImg = loadImage("");
 
-  //loads character + idle image
+  //this loads character + idle image
  characterImg = loadImage("assets/idleAnim.png");
 
- //loads running ani image
+ //this loads running ani image
  runImg = loadImage("assets/runAni.png");
 
 }
@@ -76,7 +76,7 @@ platforms.push(new Platform(175,529,10,100));
 //1st plat 
 platforms.push(new Platform(20,323,10,100));
 
-platforms.push(new Platform(375,399,-50,100));
+platforms.push(new Platform(375,380,-50,100));
 platforms.push(new Platform(510,570,160,100));
 platforms.push(new Platform(900,425,10,100));
 
@@ -84,8 +84,8 @@ platforms.push(new Platform(900,425,10,100));
 spikes.push(new Spike(460, 550, -45, 80));
 spikes.push(new Spike(690, 550, -55, 80));
 
-barriers.push(new Barrier(-120, 0, 10, 400));
-barriers.push(new Barrier(900, 0, 10, 400));
+barriers.push(new Barrier(-120, 0, 10, height));
+barriers.push(new Barrier(1200, 0, 10, height));
 
 }
 function draw() {
@@ -133,6 +133,7 @@ scale(1, 0.7);
 
    for(let b of barriers){
     b.display();
+    
 
     if(player.pos.x + player.hitboxW > b.x &&
        player.pos.x < b.x + b.w &&
@@ -146,6 +147,7 @@ scale(1, 0.7);
   }
    }
    player.display();
+ 
 }
 }
  //add class for the player for movement and physics
@@ -170,7 +172,7 @@ scale(1, 0.7);
 
       if(keyIsDown(65)){
         this.pos.x -= 6;
-//runs every 6 framesto slow down animation
+//runs every 6 frames to slow down animation
         if(frameCount % 6 === 0){
           //moves on to next frame animation
           frameX ++;
@@ -234,8 +236,8 @@ display(){
       }
     }
     image(characterImg, this.pos.x, this.pos.y, this.imgH,
-      this.imgW, idleFrameX * idleSpriteW, 0, idleSpriteW, 
-      idleSpriteH);
+          this.imgW, idleFrameX * idleSpriteW, 0, 
+          idleSpriteW, idleSpriteH);
     }
     }
   }
@@ -249,8 +251,8 @@ class Platform{
 }
 display(){
   //shows image backrgound only and platoform rect shape not shown.
-          //noFill();
-          //noStroke();
+          noFill();
+          noStroke();
 
   rect(this.x,this.y,this.w,this.h);
 
@@ -300,5 +302,5 @@ function repaint(){
   background(g);
 }
 
-
+//function 
 
