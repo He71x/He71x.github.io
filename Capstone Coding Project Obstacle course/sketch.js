@@ -14,6 +14,7 @@ let characterImg;
 let zombieImg;
 let button;
 let runImg;
+let levelBg2;
 
 let frameX = 0;
 let frameY = 0;
@@ -23,6 +24,7 @@ let idleFrameY = 0;
 
  //this stops the player from exiting screen
 let barriers = [];
+let level = 1;
 
 //the spikes on the screen which restarts the player
 //to the start
@@ -46,6 +48,9 @@ function preload(){
 
   //this loads level1 image
   levelBg1 = loadImage("assets/Level 1 background.png");
+
+  //loads level 2 image
+  levelBg2 = loadImage("assets/levelBg2.png");
 
   //this loads zombie + idle image
   //zombieImg = loadImage("");
@@ -85,7 +90,7 @@ spikes.push(new Spike(460, 550, -45, 80));
 spikes.push(new Spike(690, 550, -55, 80));
 
 barriers.push(new Barrier(-120, 0, 10, height));
-barriers.push(new Barrier(1200, 0, 10, height));
+barriers.push(new Barrier(1000, 570, 10, 400));
 
 }
 function draw() {
@@ -142,7 +147,12 @@ scale(1, 0.7);
        
 
        
-      player.pos.x = b.x + b.w;
+      if(b.x < width/2){
+        player.pos.x = b.x + b.w;
+      }
+      else{
+        player.pos.x = b.x - player.hitboxW;
+      }
         
   }
    }
