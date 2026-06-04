@@ -25,6 +25,7 @@ let idleFrameY = 0;
 
 //this stops the player from exiting screen
 let barriers = [];
+
 let level = 1;
 
 //the spikes on the screen which restarts the player
@@ -63,7 +64,10 @@ function preload() {
   runImg = loadImage("assets/runAni.png");
 
   //loads jump image
-  //jumpImg = loadImage("assets/");
+  jumpImg = loadImage("assets/jumpAni.png");
+
+  //loads kick image
+ // kickImg = loadImage("assets/kickAni.png")
 
 }
 
@@ -92,6 +96,8 @@ function setup() {
   //places spikes and restarts player back to the start if touched
   spikes.push(new Spike(500, 550, -110, 80));
   spikes.push(new Spike(690, 550, -85, 80));
+  //landing on the floor will restart back to start
+  spikes.push(new Spike(0, 900, 970, 130));
 
   barriers.push(new Barrier(-120, 0, 10, height));
   barriers.push(new Barrier(1000, 570, 10, 400));
@@ -112,7 +118,7 @@ function draw() {
 
     image(levelBg1, 0, 0, width, height);
 
-    fill("darkred")
+    fill("darkred");
     rect(0, 975, 1000, 900);
 
 
@@ -156,7 +162,6 @@ function draw() {
         else {
           player.pos.x = b.x - player.hitboxW;
         }
-
       }
     }
     player.display();
@@ -171,7 +176,7 @@ class Player {
     this.jumping = false;
     this.pos = createVector(x, y);
     this.vel = createVector(0, 0);
-    this.force = createVector(0, 0.05);
+    this.force = createVector(0, 0.3);
     this.imgW = 250;
     this.imgH = 300;
 
@@ -181,8 +186,9 @@ class Player {
   }
   move() {
 
+
     if (keyIsDown(32) && this.jumping === false) {
-      this.vel.y -= 10;
+      this.vel.y -= 15;
       this.jumping = true;
     }
     //adds the gravity
@@ -190,9 +196,9 @@ class Player {
     this.pos.add(this.vel);
 
     if (keyIsDown(65)) {
-      this.pos.x -= 5;
+      this.pos.x -= 5.5;
       //runs every 6 frames to slow down animation
-      if (frameCount % 6 === 0) {
+      if (frameCount % 5 === 0) {
         //moves on to next frame animation
         frameX++;
 
@@ -203,8 +209,8 @@ class Player {
       }
     }
     if (keyIsDown(68)) {
-      this.pos.x += 5;
-      if (frameCount % 6 === 0) {
+      this.pos.x += 5.5;
+      if (frameCount % 5 === 0) {
         frameX++;
 
         if (frameX > 4) {
@@ -236,8 +242,8 @@ class Player {
       //image width to change directions when pressing d 
       //to turn left
       image(runImg, -this.pos.x - this.imgW, this.pos.y,
-        this.imgW, this.imgH, frameX * spriteW, frameY * 
-        spriteH, spriteW, spriteH);
+        this.imgW, this.imgH, frameX * spriteW, frameY *
+      spriteH, spriteW, spriteH);
       pop();
     }
     else if (keyIsDown(68)) {
@@ -246,6 +252,21 @@ class Player {
         frameY * spriteH,
         spriteW, spriteH);
     }
+    else if (this.vel.y < 0) {
+      if (frameCount % 6 === 0) {
+        frameX++;
+
+        if (frameX > 5) {
+          frameX = 0;
+        }
+      }
+      image(jumpImg, player.pos.x, player.pos.y,
+        player.imgW, player.imgH, frameX * spriteW,
+        frameY * spriteH, spriteW, spriteH);
+
+    }
+
+
     else {
       //idle animation start similar to running sprite sheet
       if (frameCount % 20 === 0) {
@@ -278,7 +299,6 @@ class Platform {
 
   }
 }
-
 class Spike {
   constructor(x, y, w, h) {
     this.x = x;
@@ -304,7 +324,7 @@ class Barrier {
   }
   display() {
 
-    fill("blue")
+    fill("blue");
     rect(this.x, this.y, this.w, this.h);
   }
 }
