@@ -36,7 +36,6 @@ let spikes = [];
 let spriteW = 260;
 let spriteH = 300;
 
-
 let idleSpriteW = 260;
 let idleSpriteH = 300;
 
@@ -67,7 +66,7 @@ function preload() {
   jumpImg = loadImage("assets/jumpAni.png");
 
   //loads kick image
- // kickImg = loadImage("assets/kickAni.png")
+  //kickImg = loadImage("assets/kickAni.png")
 
 }
 
@@ -83,6 +82,7 @@ function setup() {
 
   //places platform in its spot and used arrays
   //floor
+  if(level === 1){
   platforms.push(new Platform(0, 990, 970, 130));
   //2nd plat
   platforms.push(new Platform(175, 529, 10, 100));
@@ -101,6 +101,7 @@ function setup() {
 
   barriers.push(new Barrier(-120, 0, 10, height));
   barriers.push(new Barrier(1000, 570, 10, 400));
+  }
 
 }
 function draw() {
@@ -115,13 +116,15 @@ function draw() {
   }
   else {
     scale(1, 0.7);
-
+    if(level === 1){
     image(levelBg1, 0, 0, width, height);
 
     fill("darkred");
     rect(0, 975, 1000, 900);
-
-
+  }
+  else if(level === 2){
+    image(levelBg2, 0, 0, width, height );
+  }
     //display the platform but not shown
     for (let p of platforms) {
 
@@ -144,6 +147,12 @@ function draw() {
     }
 
     player.move();
+    if(level === 1 & player.pos.x > width/1.2){
+      level = 2;
+      player.pos.x = 0;
+      player.pos.y = 10;
+
+    }
 
 
     for (let b of barriers) {
