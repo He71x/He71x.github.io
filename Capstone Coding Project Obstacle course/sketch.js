@@ -1,6 +1,6 @@
-// The Death Chase
+// The Death Chase (Capstone Project)
 // Amaan and Ahnaaf
-// 5/6/26
+// May 6, Wednesday, 2026
 
 
 
@@ -75,7 +75,6 @@ function preload() {
 
   //loads kick image
   //kickImg = loadImage("assets/kickAni.png")
-
 }
 
 function setup() {
@@ -90,7 +89,6 @@ function setup() {
 
   //places platform in its spot and used arrays
   //floor
-  
   level1Platforms.push(new Platform(0, 990, 970, 130));
   //2nd plat
   level1Platforms.push(new Platform(175, 529, 10, 100));
@@ -111,17 +109,16 @@ function setup() {
   level1Barriers.push(new Barrier(1000, 570, 10, 400));
 
   //now level 2 classes + positions not yet updated
-   level2Platforms.push(new Platform(0, 990, 970, 130));
-  level2Platforms.push(new Platform(175, 529, 10, 100));
-  level2Platforms.push(new Platform(20, 323, 10, 100));
+   level2Platforms.push(new Platform(0, 900, 970, 500));
+  level2Platforms.push(new Platform(230, 750, 30, 100));
+  level2Platforms.push(new Platform(20, 635, 10, 100));
 
-  level2Platforms.push(new Platform(375, 380, -50, 100));
-  level2Platforms.push(new Platform(510, 570, 160, 100));
-  level2Platforms.push(new Platform(900, 460, 10, 100));
+  level2Platforms.push(new Platform(375, 200, -50, 100));
+  level2Platforms.push(new Platform(510, 200, 160, 100));
+  level2Platforms.push(new Platform(900, 300, 10, 100));
 
-  level2Spikes.push(new Spike(500, 550, -110, 80));
-  level2Spikes.push(new Spike(690, 550, -85, 80));
-  level2Spikes.push(new Spike(0, 900, 970, 130));
+  level2Spikes.push(new Spike(290, 720, -85, 80));
+  level2Spikes.push(new Spike(0, 870, 970, 130));
 
   level2Barriers.push(new Barrier(-120, 0, 10, height));
   level2Barriers.push(new Barrier(1000, 570, 10, 400));
@@ -180,10 +177,7 @@ function draw() {
       level = 2;
       player.pos.x = 0;
       player.pos.y = 10;
-
-    }
-
-
+    } 
     for (let b of barriers) {
       b.display();
 
@@ -330,8 +324,8 @@ class Platform {
   }
   display() {
     //shows image backrgound only and platoform rect shape not shown.
-    noFill();
-    noStroke();
+      noFill();
+       noStroke();
 
     rect(this.x, this.y, this.w, this.h);
 
@@ -362,7 +356,7 @@ class Barrier {
   }
   display() {
 
-    fill("blue");
+    fill("grey");
     rect(this.x, this.y, this.w, this.h);
   }
 }
