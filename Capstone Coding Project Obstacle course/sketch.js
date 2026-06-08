@@ -43,6 +43,14 @@ let player;
 
 let platforms = [];
 
+let level1Barriers = [];
+let level1Spikes = [];
+let level1Platforms = [];
+
+let level2Barriers = [];
+let level2Spikes = [];
+let level2Platforms = [];
+
 function preload() {
   //this loads menu background image
   menuBg = loadImage("assets/Menu Background.jpeg");
@@ -82,27 +90,42 @@ function setup() {
 
   //places platform in its spot and used arrays
   //floor
-  if(level === 1){
-  platforms.push(new Platform(0, 990, 970, 130));
+  
+  level1Platforms.push(new Platform(0, 990, 970, 130));
   //2nd plat
-  platforms.push(new Platform(175, 529, 10, 100));
+  level1Platforms.push(new Platform(175, 529, 10, 100));
   //1st plat 
-  platforms.push(new Platform(20, 323, 10, 100));
+  level1Platforms.push(new Platform(20, 323, 10, 100));
 
-  platforms.push(new Platform(375, 380, -50, 100));
-  platforms.push(new Platform(510, 570, 160, 100));
-  platforms.push(new Platform(900, 460, 10, 100));
+  level1Platforms.push(new Platform(375, 380, -50, 100));
+  level1Platforms.push(new Platform(510, 570, 160, 100));
+  level1Platforms.push(new Platform(900, 460, 10, 100));
 
   //places spikes and restarts player back to the start if touched
-  spikes.push(new Spike(500, 550, -110, 80));
-  spikes.push(new Spike(690, 550, -85, 80));
+  level1Spikes.push(new Spike(500, 550, -110, 80));
+  level1Spikes.push(new Spike(690, 550, -85, 80));
   //landing on the floor will restart back to start
-  spikes.push(new Spike(0, 900, 970, 130));
+  level1Spikes.push(new Spike(0, 900, 970, 130));
 
-  barriers.push(new Barrier(-120, 0, 10, height));
-  barriers.push(new Barrier(1000, 570, 10, 400));
-  }
+  level1Barriers.push(new Barrier(-120, 0, 10, height));
+  level1Barriers.push(new Barrier(1000, 570, 10, 400));
 
+  //now level 2 classes + positions not yet updated
+   level2Platforms.push(new Platform(0, 990, 970, 130));
+  level2Platforms.push(new Platform(175, 529, 10, 100));
+  level2Platforms.push(new Platform(20, 323, 10, 100));
+
+  level2Platforms.push(new Platform(375, 380, -50, 100));
+  level2Platforms.push(new Platform(510, 570, 160, 100));
+  level2Platforms.push(new Platform(900, 460, 10, 100));
+
+  level2Spikes.push(new Spike(500, 550, -110, 80));
+  level2Spikes.push(new Spike(690, 550, -85, 80));
+  level2Spikes.push(new Spike(0, 900, 970, 130));
+
+  level2Barriers.push(new Barrier(-120, 0, 10, height));
+  level2Barriers.push(new Barrier(1000, 570, 10, 400));
+    
 }
 function draw() {
   background(220);
@@ -117,12 +140,18 @@ function draw() {
   else {
     scale(1, 0.7);
     if(level === 1){
+      platforms = level1Platforms;
+      spikes = level1Spikes;
+      barriers = level1Barriers;
     image(levelBg1, 0, 0, width, height);
 
     fill("darkred");
     rect(0, 975, 1000, 900);
   }
   else if(level === 2){
+    platforms = level2Platforms;
+      spikes = level2Spikes;
+      barriers = level2Barriers;
     image(levelBg2, 0, 0, width, height );
   }
     //display the platform but not shown
@@ -351,5 +380,5 @@ function repaint() {
   background(g);
 }
 
-//function transistion
+
 
