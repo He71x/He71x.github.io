@@ -13,6 +13,7 @@ let levelBg1;
 let characterImg;
 let zombieImg;
 let button;
+let levelBg3;
 
 let runImg;
 let levelBg2;
@@ -51,6 +52,12 @@ let level2Barriers = [];
 let level2Spikes = [];
 let level2Platforms = [];
 
+let level3Barriers = [];
+let level3Spikes = [];
+let level3Platforms = [];
+
+
+
 function preload() {
   //this loads menu background image
   menuBg = loadImage("assets/Menu Background.jpeg");
@@ -60,6 +67,9 @@ function preload() {
 
   //loads level 2 image
   levelBg2 = loadImage("assets/levelBg2.png");
+
+  //loads level 3 image
+  levelBg3 = loadImage("assets/levelBg3.png");
 
   //this loads zombie + idle image
   //zombieImg = loadImage("");
@@ -108,21 +118,29 @@ function setup() {
   level1Barriers.push(new Barrier(-120, 0, 10, height));
   level1Barriers.push(new Barrier(1000, 570, 10, 400));
 
-  //now level 2 classes + positions not yet updated
+  //now level 2 classes
    level2Platforms.push(new Platform(0, 900, 970, 500));
   level2Platforms.push(new Platform(230, 750, 30, 100));
   level2Platforms.push(new Platform(20, 635, 10, 100));
 
-  level2Platforms.push(new Platform(375, 200, -50, 100));
-  level2Platforms.push(new Platform(510, 200, 160, 100));
-  level2Platforms.push(new Platform(900, 300, 10, 100));
+  level2Platforms.push(new Platform(510, 650, -20, 100));
+  level2Platforms.push(new Platform(740, 570, -70, 100));
+   level2Platforms.push(new Platform(840, 460, -70, 100));
+  level2Platforms.push(new Platform(930, 300, 5, 100));
 
   level2Spikes.push(new Spike(290, 720, -85, 80));
   level2Spikes.push(new Spike(0, 870, 970, 130));
 
   level2Barriers.push(new Barrier(-120, 0, 10, height));
   level2Barriers.push(new Barrier(1000, 570, 10, 400));
-    
+      
+  //now level 3 classes
+level3Platforms.push(new Platform(0, 300, 10, 200));
+
+
+ level3Spikes.push(new Spike(0, 900, 970, 130));
+
+   level3Barriers.push(new Barrier(-120, 0, 10, height));
 }
 function draw() {
   background(220);
@@ -150,6 +168,14 @@ function draw() {
       spikes = level2Spikes;
       barriers = level2Barriers;
     image(levelBg2, 0, 0, width, height );
+    rect(0, 975, 1000, 900);
+  }
+  else if(level === 3){
+platforms = level3Platforms;
+      spikes = level3Spikes;
+      barriers = level3Barriers;
+    image(levelBg3, 0, 0, width, height);
+    rect(0, 975, 1000, 900);
   }
     //display the platform but not shown
     for (let p of platforms) {
@@ -176,7 +202,12 @@ function draw() {
     if(level === 1 & player.pos.x > width/1.2){
       level = 2;
       player.pos.x = 0;
-      player.pos.y = 10;
+      player.pos.y = 0;
+    }
+    if(level === 2 & player.pos.x > width/1.2){
+      level = 3;
+      player.pos.x = 0;
+      player.pos.y = 0;
     } 
     for (let b of barriers) {
       b.display();
@@ -324,8 +355,8 @@ class Platform {
   }
   display() {
     //shows image backrgound only and platoform rect shape not shown.
-      noFill();
-       noStroke();
+        noFill();
+        noStroke();
 
     rect(this.x, this.y, this.w, this.h);
 
