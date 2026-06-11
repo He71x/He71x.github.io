@@ -135,7 +135,10 @@ function setup() {
   level2Barriers.push(new Barrier(1000, 570, 10, 400));
       
   //now level 3 classes
-level3Platforms.push(new Platform(0, 300, 10, 200));
+level3Platforms.push(new Platform(10, 270, 10, 200));
+level3Platforms.push(new Platform(260, 280, -80, 100));
+level3Platforms.push(new Platform(410, 420, -80, 100));
+level3Platforms.push(new Platform(260, 740, -30, 100));
 
 
  level3Spikes.push(new Spike(0, 900, 970, 130));
@@ -234,7 +237,7 @@ platforms = level3Platforms;
 //add class for the player for movement and physics
 //when touching ground or platforms shown
 class Player {
-  constructor(x, y) {
+  constructor(x, y) { // this is code for the gravity
     //using inspiration from the vectors exercise
     this.jumping = false;
     this.pos = createVector(x, y);
@@ -251,7 +254,7 @@ class Player {
 
 
     if (keyIsDown(32) && this.jumping === false) {
-      this.vel.y -= 15;
+      this.vel.y -= 14;
       this.jumping = true;
     }
     //adds the gravity
@@ -354,9 +357,9 @@ class Platform {
     this.h = h;
   }
   display() {
-    //shows image backrgound only and platoform rect shape not shown.
-        noFill();
-        noStroke();
+    //shows image backrgound only and platform rect shape not shown.
+         //noFill();
+         //noStroke();
 
     rect(this.x, this.y, this.w, this.h);
 
