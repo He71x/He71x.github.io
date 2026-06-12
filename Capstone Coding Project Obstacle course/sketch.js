@@ -2,11 +2,6 @@
 // Amaan and Ahnaaf
 // May 6, Wednesday, 2026
 
-
-
-//which screen shown
-let gameState = "menu";
-
 let firstImage = true;
 let menuBg;
 let levelBg1;
@@ -138,10 +133,16 @@ function setup() {
 level3Platforms.push(new Platform(10, 270, 10, 200));
 level3Platforms.push(new Platform(260, 280, -80, 100));
 level3Platforms.push(new Platform(410, 420, -80, 100));
-level3Platforms.push(new Platform(260, 740, -30, 100));
+level3Platforms.push(new Platform(145, 750, 75, 100));
+
+level3Platforms.push(new Platform(540, 520, -81, 100));
+level3Platforms.push(new Platform(670, 590, 10, 100));
+// level3Platforms.push(new Platform(145, 750, 75, 100));
+// level3Platforms.push(new Platform(145, 750, 75, 100));
 
 
  level3Spikes.push(new Spike(0, 900, 970, 130));
+ level3Spikes.push(new Spike(170, 720, 40, 80));
 
    level3Barriers.push(new Barrier(-120, 0, 10, height));
 }
@@ -205,12 +206,12 @@ platforms = level3Platforms;
     if(level === 1 & player.pos.x > width/1.2){
       level = 2;
       player.pos.x = 0;
-      player.pos.y = 0;
+      player.pos.y = 300;
     }
     if(level === 2 & player.pos.x > width/1.2){
       level = 3;
-      player.pos.x = 0;
-      player.pos.y = 0;
+      player.pos.x = -300;
+      player.pos.y = 100;
     } 
     for (let b of barriers) {
       b.display();
@@ -358,8 +359,8 @@ class Platform {
   }
   display() {
     //shows image backrgound only and platform rect shape not shown.
-         //noFill();
-         //noStroke();
+         noFill();
+         noStroke();
 
     rect(this.x, this.y, this.w, this.h);
 
