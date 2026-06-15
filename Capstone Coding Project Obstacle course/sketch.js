@@ -104,7 +104,7 @@ function setup() {
 
   player = new Player(-30, 130);
 
-  zombies.push(new Zombie(400, 590));
+  zombies.push(new Zombie(400, 610));
 
   //places platform in its spot and used arrays
   //floor
@@ -132,12 +132,12 @@ function setup() {
   level2Platforms.push(new Platform(230, 750, 30, 100));
   level2Platforms.push(new Platform(20, 635, 10, 100));
 
-  level2Platforms.push(new Platform(510, 650, -20, 100));
+  level2Platforms.push(new Platform(490, 650, -20, 100));
   level2Platforms.push(new Platform(740, 570, -70, 100));
   level2Platforms.push(new Platform(840, 460, -70, 100));
   level2Platforms.push(new Platform(930, 300, 5, 100));
 
-  level2Spikes.push(new Spike(270, 720, -85, 80));
+  level2Spikes.push(new Spike(290, 720, -85, 80));
   level2Spikes.push(new Spike(0, 870, 970, 130));
 
   level2Barriers.push(new Barrier(-120, 0, 10, height));
@@ -354,10 +354,10 @@ function draw() {
 class Zombie {
   constructor(x, y,) {
     this.pos = createVector(x, y);
-    this.w = 30;
-    this.h = 30;
+    this.w = 20;
+    this.h = 20;
 
-    this.speed = 2;
+    this.speed = 1.5;
     this.dir = 1;
   }
   move() {
@@ -368,8 +368,8 @@ class Zombie {
       this.pos.x = 550;
       this.dir = -1;
     }
-    if (this.pos.x <= 400) {
-      this.pos.x = 400;
+    if (this.pos.x <= 470) {
+      this.pos.x = 470;
       this.dir = 1;
     }
   }
@@ -378,9 +378,9 @@ class Zombie {
     rect(this.pos.x, this.pos.y, this.w, this.h);
 
     //eyes
-    fill("red");
-    rect(this.pos.x + 10, this.pos.y + 5, 6, 15);
-    rect(this.pos.x + 30, this.pos.y + 5, 5, 15);
+     fill("red");
+     rect(this.pos.x + 7, this.pos.y + 5, 5, 10);
+    
 
   }
 }
@@ -506,8 +506,8 @@ class Platform {
   }
   display() {
     //shows image backrgound only and platform rect shape not shown.
-    // noFill();
-    // noStroke();
+    //  noFill();
+    //  noStroke();
 
     rect(this.x, this.y, this.w, this.h);
 
