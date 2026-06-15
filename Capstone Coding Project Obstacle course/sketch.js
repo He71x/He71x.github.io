@@ -7,11 +7,16 @@ let menuBg;
 let levelBg1;
 let characterImg;
 let zombieImg;
+let bigZombieImg;
 let button;
 let levelBg3;
+let winImg;
+let kickImg;
+
 
 let runImg;
 let levelBg2;
+let levelBg4;
 let jumpImg;
 let frameX = 0;
 let frameY = 0;
@@ -36,6 +41,7 @@ let idleSpriteW = 260;
 let idleSpriteH = 300;
 
 let player;
+let zombies = [];
 
 let platforms = [];
 
@@ -50,6 +56,10 @@ let level2Platforms = [];
 let level3Barriers = [];
 let level3Spikes = [];
 let level3Platforms = [];
+
+let level4Barriers = [];
+let level4Spikes = [];
+let level4Platforms = [];
 
 
 
@@ -66,8 +76,11 @@ function preload() {
   //loads level 3 image
   levelBg3 = loadImage("assets/levelBg3.png");
 
-  //this loads zombie + idle image
-  //zombieImg = loadImage("");
+  //loads level 4 image
+  levelBg4 = loadImage("assets/levelBg4.png");
+
+  //loads end image
+  winImg = loadImage("assets/youWin.png");;
 
   //this loads character + idle image
   characterImg = loadImage("assets/idleAnim.png");
@@ -78,8 +91,7 @@ function preload() {
   //loads jump image
   jumpImg = loadImage("assets/jumpAni.png");
 
-  //loads kick image
-  //kickImg = loadImage("assets/kickAni.png")
+
 }
 
 function setup() {
@@ -91,6 +103,8 @@ function setup() {
   button.mousePressed(startGame);
 
   player = new Player(-30, 130);
+
+  zombies.push(new Zombie(400, 590));
 
   //places platform in its spot and used arrays
   //floor
@@ -114,38 +128,68 @@ function setup() {
   level1Barriers.push(new Barrier(1000, 570, 10, 400));
 
   //now level 2 classes
-   level2Platforms.push(new Platform(0, 900, 970, 500));
+  level2Platforms.push(new Platform(0, 900, 970, 500));
   level2Platforms.push(new Platform(230, 750, 30, 100));
   level2Platforms.push(new Platform(20, 635, 10, 100));
 
   level2Platforms.push(new Platform(510, 650, -20, 100));
   level2Platforms.push(new Platform(740, 570, -70, 100));
-   level2Platforms.push(new Platform(840, 460, -70, 100));
+  level2Platforms.push(new Platform(840, 460, -70, 100));
   level2Platforms.push(new Platform(930, 300, 5, 100));
 
-  level2Spikes.push(new Spike(290, 720, -85, 80));
+  level2Spikes.push(new Spike(270, 720, -85, 80));
   level2Spikes.push(new Spike(0, 870, 970, 130));
 
   level2Barriers.push(new Barrier(-120, 0, 10, height));
   level2Barriers.push(new Barrier(1000, 570, 10, 400));
-      
+
   //now level 3 classes
-level3Platforms.push(new Platform(10, 270, 10, 200));
-level3Platforms.push(new Platform(260, 280, -80, 100));
-level3Platforms.push(new Platform(410, 420, -80, 100));
-level3Platforms.push(new Platform(145, 750, 75, 100));
+  level3Platforms.push(new Platform(10, 270, 10, 200));
+  level3Platforms.push(new Platform(260, 280, -80, 100));
+  level3Platforms.push(new Platform(410, 420, -80, 100));
+  level3Platforms.push(new Platform(145, 750, 75, 100));
 
-level3Platforms.push(new Platform(540, 520, -81, 100));
-level3Platforms.push(new Platform(670, 590, 10, 100));
-// level3Platforms.push(new Platform(145, 750, 75, 100));
-// level3Platforms.push(new Platform(145, 750, 75, 100));
+  level3Platforms.push(new Platform(540, 520, -81, 100));
+  level3Platforms.push(new Platform(670, 590, 10, 100));
+  level3Platforms.push(new Platform(830, 450, -80, 100));
+  level3Platforms.push(new Platform(930, 288, -70, 100));
 
 
- level3Spikes.push(new Spike(0, 900, 970, 130));
- level3Spikes.push(new Spike(170, 720, 40, 80));
+  level3Spikes.push(new Spike(0, 900, 970, 130));
+  level3Spikes.push(new Spike(170, 720, 40, 80));
 
-   level3Barriers.push(new Barrier(-120, 0, 10, height));
+  level3Barriers.push(new Barrier(-120, 0, 10, height));
+  level3Barriers.push(new Barrier(1000, 570, 10, 400));
+
+
+  //level 4 classes
+  level4Platforms.push(new Platform(40, 760, 15, 100));
+  level4Platforms.push(new Platform(200, 620, -100, 90));
+  level4Platforms.push(new Platform(110, 503, -90, 50));
+  level4Platforms.push(new Platform(180, 390, -90, 50));
+  level4Platforms.push(new Platform(105, 275, -90, 50));
+  level4Platforms.push(new Platform(230, 265, -90, 50));
+
+  level4Platforms.push(new Platform(340, 150, -90, 50));
+  level4Platforms.push(new Platform(530, 190, -90, 50));
+  level4Platforms.push(new Platform(680, 100, -90, 50));
+  level4Platforms.push(new Platform(935, 640, -90, 50));
+
+  level4Platforms.push(new Platform(275, 800, -60, 90));
+  level4Platforms.push(new Platform(472, 860, 35, 90));
+  level4Platforms.push(new Platform(450, 680, -80, 90));
+  level4Platforms.push(new Platform(810, 720, -80, 90));
+
+
+
+  level4Spikes.push(new Spike(280, 370, 400, 30));
+  level4Spikes.push(new Spike(0, 960, 970, 130));
+
+  level4Barriers.push(new Barrier(-120, 0, 10, height));
+  level4Barriers.push(new Barrier(1000, 570, 10, 400));
 }
+
+
 function draw() {
   background(220);
   if (firstImage) {
@@ -158,29 +202,42 @@ function draw() {
   }
   else {
     scale(1, 0.7);
-    if(level === 1){
+    if (level === 1) {
       platforms = level1Platforms;
       spikes = level1Spikes;
       barriers = level1Barriers;
-    image(levelBg1, 0, 0, width, height);
+      image(levelBg1, 0, 0, width, height);
 
-    fill("darkred");
-    rect(0, 975, 1000, 900);
-  }
-  else if(level === 2){
-    platforms = level2Platforms;
+      fill("darkred");
+      rect(0, 975, 1000, 900);
+    }
+    else if (level === 2) {
+      platforms = level2Platforms;
       spikes = level2Spikes;
       barriers = level2Barriers;
-    image(levelBg2, 0, 0, width, height );
-    rect(0, 975, 1000, 900);
-  }
-  else if(level === 3){
-platforms = level3Platforms;
+      image(levelBg2, 0, 0, width, height);
+      rect(0, 975, 1000, 900);
+    }
+    else if (level === 3) {
+      platforms = level3Platforms;
       spikes = level3Spikes;
       barriers = level3Barriers;
-    image(levelBg3, 0, 0, width, height);
-    rect(0, 975, 1000, 900);
-  }
+      image(levelBg3, 0, 0, width, height);
+      rect(0, 975, 1000, 900);
+    }
+    else if (level === 4) {
+      platforms = level4Platforms;
+      spikes = level4Spikes;
+      barriers = level4Barriers;
+      image(levelBg4, 0, 0, width, height);
+      rect(0, 975, 1000, 900);
+    }
+    else if (level === 5) {
+      image(winImg, 0, 0, width, height);
+      fill("darkgreen");
+      rect(0, 975, 1000, 900);
+      return;
+    }
     //display the platform but not shown
     for (let p of platforms) {
 
@@ -199,39 +256,131 @@ platforms = level3Platforms;
         player.pos.y = 100;
         player.vel.y = 0;
 
+        if (level === 1) {
+          player.pos.x = -90;
+          player.pos.y = 100;
+        }
+        else if (level === 2) {
+          player.pos.x = 0;
+          player.pos.y = 300;
+        }
+        else if (level === 3) {
+          player.pos.x = -300;
+          player.pos.y = 100;
+        }
+        else if (level === 4) {
+          player.pos.x = 40;
+          player.pos.y = 550;
+        }
+
       }
     }
-
     player.move();
-    if(level === 1 & player.pos.x > width/1.2){
-      level = 2;
-      player.pos.x = 0;
-      player.pos.y = 300;
-    }
-    if(level === 2 & player.pos.x > width/1.2){
-      level = 3;
-      player.pos.x = -300;
-      player.pos.y = 100;
-    } 
-    for (let b of barriers) {
-      b.display();
+    for (let z of zombies) {
+      if (level === 2 || level === 3) {
+        z.move();
+        z.display();
 
+        //if touching zombie, restarts the player back
+        if (player.pos.x + player.hitboxW > z.pos.x &&
+          player.pos.x < z.pos.x + z.w &&
+          player.pos.y + player.hitboxH > z.pos.y &&
+          player.pos.y < z.pos.y + z.h) {
 
+          if (level === 2) {
+            player.pos.x = 0;
+            player.pos.y = 300;
 
-      if (player.pos.x + player.hitboxW > b.x &&
-        player.pos.x < b.x + b.w &&
-        player.pos.y + player.hitboxH > b.y &&
-        player.pos.y < b.y + b.h) {
+          }
+          if (level === 3) {
+            player.pos.x = -300;
+            player.pos.y = 100;
 
-        if (b.x < width / 2) {
-          player.pos.x = b.x + b.w;
-        }
-        else {
-          player.pos.x = b.x - player.hitboxW;
+          }
+          player.vel.y = 0;
         }
       }
+      if (level === 1 && player.pos.x > width / 1.2 &&
+        player.pos.y > 200 &&
+        player.pos.y < 400) {
+
+        level = 2;
+        player.pos.x = 0;
+        player.pos.y = 300;
+      }
+      if (level === 2 && player.pos.x > width / 1.2
+        &&
+        player.pos.y > 50 &&
+        player.pos.y < 250) {
+
+        level = 3;
+        player.pos.x = -300;
+        player.pos.y = 100;
+      }
+      if (level === 3 && player.pos.x > width / 1.2
+        && player.pos.y > 50 &&
+        player.pos.y < 250) {
+        level = 4;
+        player.pos.x = 40;
+        player.pos.y = 550;
+      }
+      if (level === 4 && player.pos.x > width / 1.5 &&
+        player.pos.y > 200 &&
+        player.pos.y < 400) {
+        level = 5;
+      }
+      for (let b of barriers) {
+        b.display();
+
+        if (player.pos.x + player.hitboxW > b.x &&
+          player.pos.x < b.x + b.w &&
+          player.pos.y + player.hitboxH > b.y &&
+          player.pos.y < b.y + b.h) {
+
+          if (b.x < width / 2) {
+            player.pos.x = b.x + b.w;
+          }
+          else {
+            player.pos.x = b.x - player.hitboxW;
+          }
+        }
+      }
+      player.display();
+
     }
-    player.display();
+  }
+
+}
+class Zombie {
+  constructor(x, y,) {
+    this.pos = createVector(x, y);
+    this.w = 30;
+    this.h = 30;
+
+    this.speed = 2;
+    this.dir = 1;
+  }
+  move() {
+
+    this.pos.x += this.speed * this.dir;
+
+    if (this.pos.x >= 550) {
+      this.pos.x = 550;
+      this.dir = -1;
+    }
+    if (this.pos.x <= 400) {
+      this.pos.x = 400;
+      this.dir = 1;
+    }
+  }
+  display() {
+    fill("darkgreen");
+    rect(this.pos.x, this.pos.y, this.w, this.h);
+
+    //eyes
+    fill("red");
+    rect(this.pos.x + 10, this.pos.y + 5, 6, 15);
+    rect(this.pos.x + 30, this.pos.y + 5, 5, 15);
 
   }
 }
@@ -243,7 +392,7 @@ class Player {
     this.jumping = false;
     this.pos = createVector(x, y);
     this.vel = createVector(0, 0);
-    this.force = createVector(0, 0.3);
+    this.force = createVector(0, 0.25);
     this.imgW = 250;
     this.imgH = 300;
 
@@ -332,8 +481,6 @@ class Player {
         frameY * spriteH, spriteW, spriteH);
 
     }
-
-
     else {
       //idle animation start similar to running sprite sheet
       if (frameCount % 20 === 0) {
@@ -359,8 +506,8 @@ class Platform {
   }
   display() {
     //shows image backrgound only and platform rect shape not shown.
-         noFill();
-         noStroke();
+    // noFill();
+    // noStroke();
 
     rect(this.x, this.y, this.w, this.h);
 
