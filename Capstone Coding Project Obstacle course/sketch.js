@@ -2,16 +2,20 @@
 // Amaan and Ahnaaf
 // May 6, Wednesday, 2026
 
+//TIP: 
+// 1. Some platforms in the last level may drop you.
+// 2. Timing is key and even being close to the alien can 
+// kill u.
+
+
+
 let firstImage = true;
 let menuBg;
 let levelBg1;
 let characterImg;
-let zombieImg;
-let bigZombieImg;
 let button;
 let levelBg3;
 let winImg;
-let kickImg;
 
 
 let runImg;
@@ -41,7 +45,12 @@ let idleSpriteW = 260;
 let idleSpriteH = 300;
 
 let player;
-let zombies = [];
+
+let aliens = [];
+
+let level2Aliens = [];
+let level3Aliens = [];
+let level4Aliens = [];
 
 let platforms = [];
 
@@ -104,7 +113,9 @@ function setup() {
 
   player = new Player(-30, 130);
 
-  zombies.push(new Zombie(400, 610));
+  level2Aliens.push(new Alien(400, 620));
+  level3Aliens.push(new Alien(100, 620));
+  level4Aliens.push(new Alien(200, 620));
 
   //places platform in its spot and used arrays
   //floor
@@ -137,7 +148,7 @@ function setup() {
   level2Platforms.push(new Platform(840, 460, -70, 100));
   level2Platforms.push(new Platform(930, 300, 5, 100));
 
-  level2Spikes.push(new Spike(290, 720, -85, 80));
+  level2Spikes.push(new Spike(290, 720, -95, 80));
   level2Spikes.push(new Spike(0, 870, 970, 130));
 
   level2Barriers.push(new Barrier(-120, 0, 10, height));
@@ -215,6 +226,7 @@ function draw() {
       platforms = level2Platforms;
       spikes = level2Spikes;
       barriers = level2Barriers;
+      aliens = level2Aliens;
       image(levelBg2, 0, 0, width, height);
       rect(0, 975, 1000, 900);
     }
@@ -222,6 +234,7 @@ function draw() {
       platforms = level3Platforms;
       spikes = level3Spikes;
       barriers = level3Barriers;
+      aliens = level3Aliens;
       image(levelBg3, 0, 0, width, height);
       rect(0, 975, 1000, 900);
     }
@@ -229,6 +242,7 @@ function draw() {
       platforms = level4Platforms;
       spikes = level4Spikes;
       barriers = level4Barriers;
+      aliens = level4Aliens;
       image(levelBg4, 0, 0, width, height);
       rect(0, 975, 1000, 900);
     }
@@ -276,16 +290,16 @@ function draw() {
       }
     }
     player.move();
-    for (let z of zombies) {
+    for (let a of aliens) {
       if (level === 2 || level === 3) {
-        z.move();
-        z.display();
+        a.move();
+        a.display();
 
-        //if touching zombie, restarts the player back
-        if (player.pos.x + player.hitboxW > z.pos.x &&
-          player.pos.x < z.pos.x + z.w &&
-          player.pos.y + player.hitboxH > z.pos.y &&
-          player.pos.y < z.pos.y + z.h) {
+        //if touching alien, restarts the player back
+        if (player.pos.x + player.hitboxW > a.pos.x &&
+          player.pos.x < a.pos.x + a.w &&
+          player.pos.y + player.hitboxH > a.pos.y &&
+          player.pos.y < a.pos.y + a.h) {
 
           if (level === 2) {
             player.pos.x = 0;
@@ -324,9 +338,9 @@ function draw() {
         player.pos.x = 40;
         player.pos.y = 550;
       }
-      if (level === 4 && player.pos.x > width / 1.5 &&
-        player.pos.y > 200 &&
-        player.pos.y < 400) {
+      if (level === 4 && player.pos.x > width / 1.2 &&
+        player.pos.y > 30 &&
+        player.pos.y < 500) {
         level = 5;
       }
       for (let b of barriers) {
@@ -351,7 +365,7 @@ function draw() {
   }
 
 }
-class Zombie {
+class Alien {
   constructor(x, y,) {
     this.pos = createVector(x, y);
     this.w = 20;
@@ -457,14 +471,14 @@ class Player {
       // animation from each frame. Minusing the positionx with
       //image width to change directions when pressing d 
       //to turn left
-      image(runImg, -this.pos.x - this.imgW, this.pos.y,
-        this.imgW, this.imgH, frameX * spriteW, frameY *
+      image(runImg, -player.pos.x - player.imgW, player.pos.y,
+        player.imgW, player.imgH, frameX * spriteW, frameY *
       spriteH, spriteW, spriteH);
       pop();
     }
     else if (keyIsDown(68)) {
-      image(runImg, this.pos.x, this.pos.y,
-        this.imgW, this.imgH, frameX * spriteW,
+      image(runImg, player.pos.x, player.pos.y,
+        player.imgW, player.imgH, frameX * spriteW,
         frameY * spriteH,
         spriteW, spriteH);
     }
@@ -490,8 +504,8 @@ class Player {
           frameX = 0;
         }
       }
-      image(characterImg, this.pos.x, this.pos.y, this.imgH,
-        this.imgW, idleFrameX * idleSpriteW, 0,
+      image(characterImg, player.pos.x, player.pos.y, 
+        player.imgH, player.imgW, idleFrameX * idleSpriteW, 0,
         idleSpriteW, idleSpriteH);
     }
   }
@@ -506,8 +520,8 @@ class Platform {
   }
   display() {
     //shows image backrgound only and platform rect shape not shown.
-    //  noFill();
-    //  noStroke();
+      noFill();
+      noStroke();
 
     rect(this.x, this.y, this.w, this.h);
 
