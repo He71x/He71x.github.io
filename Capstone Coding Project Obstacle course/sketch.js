@@ -7,6 +7,9 @@
 // 2. Timing is key and even being close to the alien can 
 // kill u.
 
+//A - Run left
+//D - Run right
+//Space - Jump
 
 
 let firstImage = true;
@@ -45,8 +48,8 @@ let idleSpriteW = 260;
 let idleSpriteH = 300;
 
 let player;
+let activeAliens = [];
 
-let aliens = [];
 
 let level2Aliens = [];
 let level3Aliens = [];
@@ -112,10 +115,11 @@ function setup() {
   button.mousePressed(startGame);
 
   player = new Player(-30, 130);
-
-  level2Aliens.push(new Alien(400, 620));
-  level3Aliens.push(new Alien(100, 620));
-  level4Aliens.push(new Alien(200, 620));
+//starts at 400(xpos), 620(ypos), moves between 300 and 600
+  level2Aliens.push(new Alien(400, 620, 470, 560, 20, 20));
+  level3Aliens.push(new Alien(800, 560, 600, 700, 20, 20));
+  level4Aliens.push(new Alien(600, 815, 400, 550, 30, 30));
+  level4Aliens.push(new Alien(900, 400, 740, 880, 15, 25));
 
   //places platform in its spot and used arrays
   //floor
@@ -211,7 +215,9 @@ function draw() {
     textSize(90);
     text("THE DEATH CHASE", width / 2, 100);
   }
+  
   else {
+    
     scale(1, 0.7);
     if (level === 1) {
       platforms = level1Platforms;
@@ -226,7 +232,7 @@ function draw() {
       platforms = level2Platforms;
       spikes = level2Spikes;
       barriers = level2Barriers;
-      aliens = level2Aliens;
+      activeAliens = level2Aliens;
       image(levelBg2, 0, 0, width, height);
       rect(0, 975, 1000, 900);
     }
@@ -234,7 +240,7 @@ function draw() {
       platforms = level3Platforms;
       spikes = level3Spikes;
       barriers = level3Barriers;
-      aliens = level3Aliens;
+      activeAliens = level3Aliens;
       image(levelBg3, 0, 0, width, height);
       rect(0, 975, 1000, 900);
     }
@@ -242,7 +248,7 @@ function draw() {
       platforms = level4Platforms;
       spikes = level4Spikes;
       barriers = level4Barriers;
-      aliens = level4Aliens;
+      activeAliens = level4Aliens;
       image(levelBg4, 0, 0, width, height);
       rect(0, 975, 1000, 900);
     }
@@ -290,8 +296,8 @@ function draw() {
       }
     }
     player.move();
-    for (let a of aliens) {
-      if (level === 2 || level === 3) {
+    for (let a of activeAliens) {
+      
         a.move();
         a.display();
 
@@ -311,9 +317,13 @@ function draw() {
             player.pos.y = 100;
 
           }
-          player.vel.y = 0;
+        if(level === 4) {
+          player.pos.x = 40;
+          player.pos.y = 550;
         }
       }
+    }
+
       if (level === 1 && player.pos.x > width / 1.2 &&
         player.pos.y > 200 &&
         player.pos.y < 400) {
@@ -339,10 +349,11 @@ function draw() {
         player.pos.y = 550;
       }
       if (level === 4 && player.pos.x > width / 1.2 &&
-        player.pos.y > 30 &&
+        player.pos.y > 70 &&
         player.pos.y < 500) {
         level = 5;
       }
+
       for (let b of barriers) {
         b.display();
 
@@ -364,26 +375,29 @@ function draw() {
     }
   }
 
-}
+
 class Alien {
-  constructor(x, y,) {
+  constructor(x, y, left, right, w, h) {
     this.pos = createVector(x, y);
-    this.w = 20;
-    this.h = 20;
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
 
     this.speed = 1.5;
     this.dir = 1;
+
+    this.left = left;
+    this.right = right;
   }
   move() {
 
     this.pos.x += this.speed * this.dir;
 
-    if (this.pos.x >= 550) {
-      this.pos.x = 550;
+    if (this.pos.x >= this.right) {
       this.dir = -1;
     }
-    if (this.pos.x <= 470) {
-      this.pos.x = 470;
+    if (this.pos.x <= this.left) {
       this.dir = 1;
     }
   }
