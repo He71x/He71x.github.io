@@ -7,8 +7,6 @@
 // 2. Timing is key and even being close to the alien can 
 // kill u.
 
-
-
 let firstImage = true;
 let menuBg;
 let levelBg1;
@@ -113,9 +111,10 @@ function setup() {
 
   player = new Player(-30, 130);
 
-  level2Aliens.push(new Alien(400, 620));
-  level3Aliens.push(new Alien(100, 620));
-  level4Aliens.push(new Alien(200, 620));
+ level2Aliens.push(new Alien(400, 620, 470, 560, 20, 20));
+  level3Aliens.push(new Alien(800, 560, 600, 700, 20, 20));
+  level4Aliens.push(new Alien(600, 815, 400, 550, 30, 30));
+  level4Aliens.push(new Alien(900, 400, 740, 880, 15, 25));
 
   //places platform in its spot and used arrays
   //floor
@@ -290,11 +289,11 @@ function draw() {
       }
     }
     player.move();
-    for (let a of aliens) {
-      if (level === 2 || level === 3) {
-        a.move();
-        a.display();
 
+    for(let a of aliens){
+      a.move();
+      a.display();
+    
         //if touching alien, restarts the player back
         if (player.pos.x + player.hitboxW > a.pos.x &&
           player.pos.x < a.pos.x + a.w &&
@@ -309,7 +308,10 @@ function draw() {
           if (level === 3) {
             player.pos.x = -300;
             player.pos.y = 100;
-
+          }
+          if(level === 4){
+            player.pos.x = 40;
+            player.pos.y = 550;
           }
           player.vel.y = 0;
         }
@@ -362,27 +364,28 @@ function draw() {
       player.display();
 
     }
-  }
 }
+
 class Alien {
-  constructor(x, y,) {
+  constructor(x, y, left, right, w, h) {
     this.pos = createVector(x, y);
-    this.w = 20;
-    this.h = 20;
+    this.w = w;
+    this.h = h;
 
     this.speed = 1.5;
     this.dir = 1;
+
+    this.left = left;
+    this.right = right;
   }
   move() {
 
     this.pos.x += this.speed * this.dir;
 
-    if (this.pos.x >= 550) {
-      this.pos.x = 550;
+    if (this.pos.x >= this.right) {
       this.dir = -1;
     }
-    if (this.pos.x <= 470) {
-      this.pos.x = 470;
+    if (this.pos.x <= this.left) {
       this.dir = 1;
     }
   }
@@ -394,7 +397,7 @@ class Alien {
      fill("red");
      rect(this.pos.x + 7, this.pos.y + 5, 5, 10);
     
-
+  
   }
 }
 //add class for the player for movement and physics
